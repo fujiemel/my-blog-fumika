@@ -1,0 +1,84 @@
+---
+import I18nKey from "@i18n/i18nKey";
+import { i18n } from "@i18n/translation";
+import type { Moment } from "@utils/content-utils";
+import { getMomentUrlBySlug } from "@utils/url-utils";
+import { Icon } from "astro-icon/components";
+
+interface Props {
+	moment: Moment;
+	lang?: string;
+	class?: string;
+	style?: string;
+}
+
+const { moment, lang, style } = Astro.props;
+const className = Astro.props.class;
+
+const { published, location } = moment.data;
+const images: string[] = moment.data.images ?? [];
+const imageCount = images.length;
+
+// 单图用大图，2 张并排，4 张走 2x2，其余按 3 列铺开
+const gridClass = ["grid-cols-1", "grid-cols-2", "grid-cols-3"][
+	imageCount === 1 ? 0 : imageCount === 2 || imageCount === 4 ? 1 : 2
+];
+
+const dateFormatter = new Intl.DateTimeFormat("zh-CN", {
+	year: "numeric",
+	month: "2-digit",
+	day: "2-digit",
+	hour: "2-digit",
+	minute: "2-digit",
+	hour12: false,
+});
+const dateTime = dateFormatter.format(published).replace(/\//g, "-");
+---
+
+<article
+	class:list={[
+		"card-base px-6 md:px-9 py-6 onload-animation",
+		className,
+	]}
+	style={style}
+>
+	<a
+		href={getMomentUrlBySlug(moment.id, lang)}
+		class="group inline-flex items-center gap-2 text-sm text-black/30 dark:text-white/30 transition hover:text-(--primary)"
+	>
+		<Icon name="material-symbols:schedule-outline-rounded" class="text-[1.125rem]"></Icon>
+		<time datetime={published.toISOString()}>{dateTime}</time>
+	</a>
+
+	<div class="custom-md moment-content mt-2 mb-0">
+		<slot />
+	</div>
+
+	{imageCount > 0 && (
+		<div class:list={["grid gap-2 mt-4", gridClass]}>
+			{images.map((src, index) => (
+				<a
+					href={src}
+					class:list={[
+						"group relative overflow-hidden rounded-xl bg-(--btn-regular-bg) active:scale-[0.98] transition",
+						imageCount === 1 ? "aspect-4/3" : "aspect-square",
+					]}
+				>
+					<img
+						src={src}
+						alt={`${i18n(I18nKey.momentsImage, lang)} ${index + 1}`}
+						loading="lazy"
+						class="w-full h-full object-cover transition duration-300 group-hover:scale-105"
+					/>
+				</a>
+			))}
+		</div>
+	)}
+
+	{location && (
+		<div class="flex items-center gap-1.5 mt-4 text-sm text-black/30 dark:text-white/30">
+			<Icon name="material-symbols:location-on-outline-rounded" class="text-[1.125rem]"></Icon>
+			{location}
+		</div>
+	)}
+</article>

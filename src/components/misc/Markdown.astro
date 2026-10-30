@@ -1,0 +1,86 @@
+---
+import "@fontsource-variable/jetbrains-mono";
+import "@fontsource-variable/jetbrains-mono/wght-italic.css";
+
+interface Props {
+	class: string;
+}
+const className = Astro.props.class;
+---
+<div data-pagefind-body class={`prose dark:prose-invert prose-base max-w-none! custom-md ${className}`}>
+    <slot/>
+</div>
+
+<script>
+let mermaidModule: Promise<typeof import("mermaid")> | null = null;
+
+async function renderMermaidDiagrams() {
+	const blocks = Array.from(
+		document.querySelectorAll<HTMLElement>("pre.mermaid:not([data-rendered])"),
+	);
+	if (blocks.length === 0) return;
+
+	mermaidModule ??= import("mermaid");
+	const { default: mermaid } = await mermaidModule;
+
+	mermaid.initialize({
+		startOnLoad: false,
+		theme: document.documentElement.classList.contains("dark")
+			? "dark"
+			: "default",
+	});
+
+	for (const block of blocks) {
+		block.dataset.rendered = "true";
+		try {
+			const { svg } = await mermaid.render(
+				`mermaid-${Math.random().toString(36).slice(2, 10)}`,
+				block.textContent ?? "",
+			);
+			block.innerHTML = svg;
+		} catch (error) {
+			console.error("Failed to render mermaid diagram:", error);
+		}
+	}
+}
+
+document.addEventListener("click", function (e: MouseEvent) {
+	const target = e.target as Element | null;
+	if (target && target.classList.contains("copy-btn")) {
+		const preEle = target.closest("pre");
+		const codeEle = preEle?.querySelector("code");
+		const code = Array.from(
+			codeEle?.querySelectorAll(".code:not(summary *)") ?? [],
+		)
+			.map((el) => el.textContent)
+			.map((t) => (t === "\n" ? "" : t))
+			.join("\n");
+		navigator.clipboard.writeText(code);
+
+		const timeoutId = target.getAttribute("data-timeout-id");
+		if (timeoutId) {
+			clearTimeout(Number.parseInt(timeoutId, 10));
+		}
+
+		target.classList.add("success");
+
+		// 保存 timeout id，连续点击时重置反馈状态
+		const newTimeoutId = setTimeout(() => {
+			target.classList.remove("success");
+		}, 1000);
+
+		target.setAttribute("data-timeout-id", newTimeoutId.toString());
+	}
+});
+
+function setupMermaid() {
+	renderMermaidDiagrams();
+	window.swup?.hooks?.on("page:view", renderMermaidDiagrams);
+}
+
+if (window.swup) {
+	setupMermaid();
+} else {
+	document.addEventListener("swup:enable", setupMermaid);
+}
+</script>

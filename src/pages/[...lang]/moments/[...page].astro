@@ -1,0 +1,73 @@
+---
+import { render } from "astro:content";
+import Pagination from "@components/control/Pagination.astro";
+import MomentCard from "@components/MomentCard.astro";
+import { DEFAULT_LANG, PAGE_SIZE, SUPPORTED_LANG } from "@constants/constants";
+import I18nKey from "@i18n/i18nKey";
+import { i18n } from "@i18n/translation";
+import MainGridLayout from "@layouts/MainGridLayout.astro";
+import { getSortedMoments } from "@utils/content-utils";
+import type { GetStaticPaths } from "astro";
+
+export const getStaticPaths = (async ({ paginate }) => {
+	const allPaths = [];
+
+	for (const lang of SUPPORTED_LANG) {
+		const moments = await getSortedMoments();
+		const langParam = lang === DEFAULT_LANG ? undefined : lang;
+
+		const paginatedPages = paginate(moments, {
+			params: { lang: langParam },
+			pageSize: PAGE_SIZE,
+			props: { lang },
+		});
+
+		allPaths.push(...paginatedPages);
+	}
+
+	return allPaths;
+}) satisfies GetStaticPaths;
+
+const { page, lang } = Astro.props;
+const moments = page.data;
+
+const rendered = await Promise.all(
+	moments.map(async (moment) => ({
+		moment,
+		Content: (await render(moment)).Content,
+	})),
+);
+
+const total = page.total;
+const description = i18n(I18nKey.moments, lang);
+---
+
+<MainGridLayout
+	title={i18n(I18nKey.moments, lang)}
+	description={`${description} · ${total} ${i18n(I18nKey.momentsCount, lang)}`}
+	lang={lang}
+>
+	<div class="flex flex-col gap-4 mb-4">
+		{rendered.map(({ moment, Content }, index) => (
+			<MomentCard
+				moment={moment}
+				lang={lang}
+				style={`animation-delay: calc(var(--content-delay) + ${index * 50}ms)`}
+			>
+				<Content />
+			</MomentCard>
+		))}
+	</div>
+
+	{moments.length === 0 && (
+		<div class="card-base px-9 py-8 text-center text-black/30 dark:text-white/30">
+			{i18n(I18nKey.momentsCount, lang)}
+		</div>
+	)}
+
+	<Pagination
+		class="mx-auto onload-animation"
+		page={page}
+		style={`animation-delay: calc(var(--content-delay) + ${moments.length * 50}ms)`}
+	/>
+</MainGridLayout>

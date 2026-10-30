@@ -1,0 +1,153 @@
+---
+import { render } from "astro:content";
+import Comment from "@components/comment/index.astro";
+import Markdown from "@components/misc/Markdown.astro";
+import { DEFAULT_LANG, SUPPORTED_LANG } from "@constants/constants";
+import I18nKey from "@i18n/i18nKey";
+import { i18n } from "@i18n/translation";
+import MainGridLayout from "@layouts/MainGridLayout.astro";
+import { getSortedMoments } from "@utils/content-utils";
+import { url } from "@utils/url-utils";
+import type { GetStaticPaths } from "astro";
+import { Icon } from "astro-icon/components";
+
+export const getStaticPaths = (async () => {
+	const moments = await getSortedMoments();
+	const paths: {
+		params: { lang?: string; slug: string };
+		props: {
+			moment: (typeof moments)[number];
+			lang: string;
+			prev?: (typeof moments)[number];
+			next?: (typeof moments)[number];
+		};
+	}[] = [];
+	const lastIndex = moments.length - 1;
+
+	for (const lang of SUPPORTED_LANG) {
+		const langParam = lang === DEFAULT_LANG ? undefined : lang;
+
+		moments.forEach((moment, index) => {
+			paths.push({
+				params: { lang: langParam, slug: moment.id },
+				props: {
+					moment,
+					lang,
+					prev: index < lastIndex ? moments[index + 1] : undefined,
+					next: index > 0 ? moments[index - 1] : undefined,
+				},
+			});
+		});
+	}
+
+	return paths;
+}) satisfies GetStaticPaths;
+
+const { moment, lang, prev, next } = Astro.props;
+const { Content } = await render(moment);
+
+const { published, location } = moment.data;
+const images: string[] = moment.data.images ?? [];
+
+const dateFormatter = new Intl.DateTimeFormat("zh-CN", {
+	year: "numeric",
+	month: "2-digit",
+	day: "2-digit",
+	hour: "2-digit",
+	minute: "2-digit",
+	hour12: false,
+});
+const dateTime = dateFormatter.format(published).replace(/\//g, "-");
+
+const imageCount = images.length;
+const gridClass = ["grid-cols-1", "grid-cols-2", "grid-cols-3"][
+	imageCount === 1 ? 0 : imageCount === 2 || imageCount === 4 ? 1 : 2
+];
+---
+
+<MainGridLayout
+	title={`${i18n(I18nKey.moments, lang)} · ${dateTime}`}
+	description={i18n(I18nKey.moments, lang)}
+	lang={lang}
+>
+	<div class="flex w-full rounded-(--radius-large) overflow-hidden relative mb-4">
+		<div class="card-base z-10 px-6 md:px-9 pt-6 pb-6 relative w-full">
+			<a
+				href={url("/moments/", lang)}
+				class="group inline-flex items-center gap-1 text-sm text-black/30 dark:text-white/30 transition hover:text-(--primary)"
+			>
+				<Icon name="material-symbols:chevron-left-rounded" class="text-[1.25rem]"></Icon>
+				{i18n(I18nKey.moments, lang)}
+			</a>
+
+			<div class="flex items-center gap-2 mt-3 mb-4 text-sm text-black/30 dark:text-white/30">
+				<Icon name="material-symbols:schedule-outline-rounded" class="text-[1.125rem]"></Icon>
+				<time datetime={published.toISOString()}>{dateTime}</time>
+			</div>
+
+			<Markdown class="mb-0">
+				<Content />
+			</Markdown>
+
+			{imageCount > 0 && (
+				<div class:list={["grid gap-2 mt-5", gridClass]}>
+					{images.map((src, index) => (
+						<a
+							href={src}
+							class:list={[
+								"group relative overflow-hidden rounded-xl bg-(--btn-regular-bg) active:scale-[0.98] transition",
+								imageCount === 1 ? "aspect-4/3" : "aspect-square",
+							]}
+						>
+							<img
+								src={src}
+								alt={`${i18n(I18nKey.momentsImage, lang)} ${index + 1}`}
+								loading="lazy"
+								class="w-full h-full object-cover transition duration-300 group-hover:scale-105"
+							/>
+						</a>
+					))}
+				</div>
+			)}
+
+			{location && (
+				<div class="flex items-center gap-1.5 mt-5 text-sm text-black/30 dark:text-white/30">
+					<Icon name="material-symbols:location-on-outline-rounded" class="text-[1.125rem]"></Icon>
+					{location}
+				</div>
+			)}
+		</div>
+	</div>
+
+	<Comment lang={lang} />
+
+	<div class="flex flex-col md:flex-row justify-between mb-4 gap-4 overflow-hidden w-full">
+		<a
+			href={next ? url(`/moments/${next.id}/`, lang) : "#"}
+			class:list={["w-full font-bold overflow-hidden active:scale-95", { "pointer-events-none": !next }]}
+		>
+			{next && (
+				<div class="btn-card rounded-2xl w-full h-[3.75rem] max-w-full px-4 flex items-center justify-start! gap-4">
+					<Icon name="material-symbols:chevron-left-rounded" class="text-[2rem] text-(--primary)" />
+					<div class="overflow-hidden transition text-ellipsis whitespace-nowrap max-w-[calc(100%-3rem)] text-black/75 dark:text-white/75">
+						{i18n(I18nKey.earlierMoment, lang)}
+					</div>
+				</div>
+			)}
+		</a>
+
+		<a
+			href={prev ? url(`/moments/${prev.id}/`, lang) : "#"}
+			class:list={["w-full font-bold overflow-hidden active:scale-95", { "pointer-events-none": !prev }]}
+		>
+			{prev && (
+				<div class="btn-card rounded-2xl w-full h-[3.75rem] max-w-full px-4 flex items-center justify-end! gap-4">
+					<div class="overflow-hidden transition text-ellipsis whitespace-nowrap max-w-[calc(100%-3rem)] text-black/75 dark:text-white/75">
+						{i18n(I18nKey.laterMoment, lang)}
+					</div>
+					<Icon name="material-symbols:chevron-right-rounded" class="text-[2rem] text-(--primary)" />
+				</div>
+			)}
+		</a>
+	</div>
+</MainGridLayout>

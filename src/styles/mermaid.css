@@ -1,0 +1,16 @@
+pre.mermaid {
+	display: flex;
+	justify-content: center;
+	margin-block: 1rem;
+	overflow-x: auto;
+}
+
+pre.mermaid[data-rendered] {
+	background: transparent;
+	padding: 0;
+}
+
+pre.mermaid svg {
+	max-width: 100%;
+	height: auto;
+}
