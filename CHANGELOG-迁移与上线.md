@@ -199,10 +199,12 @@ const momentsCollection = defineCollection({
 ```jsonc
 {
   "$schema": "https://esa.aliyun.com/schema/esa.jsonc",
-  "version": "1.0",
+  "name": "my-blog-fumika",
+  "assets": {
+    "directory": "./dist"
+  },
   "build": {
     "command": "pnpm install --frozen-lockfile && pnpm run build",
-    "outputDirectory": "dist",
     "nodeVersion": "22"
   }
 }
@@ -212,9 +214,13 @@ const momentsCollection = defineCollection({
 
 | 字段 | 值 | 说明 |
 | --- | --- | --- |
-| `command` | `pnpm install --frozen-lockfile && pnpm run build` | 项目 `preinstall` 有 `only-allow pnpm`，必须用 pnpm；`--frozen-lockfile` 保证依赖版本与本地一致 |
-| `outputDirectory` | `dist` | Astro 默认输出目录 |
-| `nodeVersion` | `22` | Astro 7 要求 Node `>=22.12.0`，项目 `.nvmrc` 也是 22 |
+| `name` | `my-blog-fumika` | 项目名，缺省取目录名 |
+| `assets.directory` | `./dist` | **静态资源目录**，ESA 只认这个字段名 |
+| `build.command` | `pnpm install --frozen-lockfile && pnpm run build` | 项目 `preinstall` 有 `only-allow pnpm`，必须用 pnpm；`--frozen-lockfile` 保证依赖版本与本地一致 |
+| `build.nodeVersion` | `22` | Astro 7 要求 Node `>=22.12.0`，项目 `.nvmrc` 也是 22 |
+
+> **易错点：** 不能用 `build.outputDirectory`。ESA 的产物目录字段是顶层的 `assets.directory`，写成 `outputDirectory` 会导致构建成功后仍报
+> `Assets directory not set, skipping...` / `Both assets and function js file are not found`，站点部署为空。
 
 ### 构建流程
 

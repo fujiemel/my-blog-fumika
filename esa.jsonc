@@ -1,9 +1,11 @@
 {
   "$schema": "https://esa.aliyun.com/schema/esa.jsonc",
-  "version": "1.0",
+  "name": "my-blog-fumika",
+  "assets": {
+    "directory": "./dist"
+  },
   "build": {
     "command": "pnpm install --frozen-lockfile && pnpm run build",
-    "outputDirectory": "dist",
     "nodeVersion": "22"
   }
 }
