@@ -2,6 +2,17 @@ import { defineCollection } from "astro:content";
 import { file, glob } from "astro/loaders";
 import { z } from "astro/zod";
 
+/**
+ * 把 YAML 空值（null）转为 undefined 并套用默认值。
+ * 默认值必须在预处理内部生效：外层的 .default() 只拦截 undefined，
+ * 而 preprocess 会先收到 null 并转成 undefined，外层默认值并不会被触发。
+ */
+const emptyToDefault = <T extends z.ZodTypeAny>(
+	schema: T,
+	fallback: z.output<T>,
+) =>
+	z.preprocess((v) => (v === null || v === undefined ? fallback : v), schema);
+
 const postsCollection = defineCollection({
 	loader: glob({
 		base: "./src/content/posts",
@@ -12,13 +23,15 @@ const postsCollection = defineCollection({
 			title: z.string(),
 			published: z.date(),
 			updated: z.date().optional(),
-			draft: z.boolean().optional().default(false),
-			description: z.string().optional().default(""),
-			image: z.string().optional().default(""),
-			tags: z.array(z.string()).optional().default([]),
-			category: z.string().optional().nullable().default(""),
-			lang: z.string().optional().default(""),
-			ogImage: z.string().optional(),
+			// YAML 中留空的字段会解析成 null，而 default() 只对 undefined 生效，
+			// 故用 emptyToDefault 统一兜底，既兼容空值又不污染下游类型
+			draft: emptyToDefault(z.boolean(), false),
+			description: emptyToDefault(z.string(), ""),
+			image: emptyToDefault(z.string(), ""),
+			tags: emptyToDefault(z.array(z.string()), []),
+			category: emptyToDefault(z.string(), ""),
+			lang: emptyToDefault(z.string(), ""),
+			ogImage: emptyToDefault(z.string(), ""),
 
 			/* For internal use */
 			prevTitle: z.string().default(""),

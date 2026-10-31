@@ -59,8 +59,10 @@ export default defineConfig({
 			// when the Tailwind class `transition-all` is used
 			containers: ["main", "#toc"],
 			smoothScrolling: true,
-			cache: true,
-			preload: true,
+			// 开发模式下关闭缓存与预加载，否则改完内容后切回已访问页面仍显示旧版，
+			// 只能手动刷新才能看到更新
+			cache: !import.meta.env.DEV,
+			preload: !import.meta.env.DEV,
 			accessibility: true,
 			updateHead: true,
 			updateBodyClass: false,
