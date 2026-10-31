@@ -32,3 +32,6 @@ yarn.lock
 
 # test
 coverage
+
+# R2 同步记录
+.r2-manifest.json

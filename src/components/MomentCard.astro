@@ -1,6 +1,7 @@
 ---
 import I18nKey from "@i18n/i18nKey";
 import { i18n } from "@i18n/translation";
+import { cdnImage } from "@utils/cdn";
 import type { Moment } from "@utils/content-utils";
 import { getMomentUrlBySlug } from "@utils/url-utils";
 import { Icon } from "astro-icon/components";
@@ -58,14 +59,14 @@ const dateTime = dateFormatter.format(published).replace(/\//g, "-");
 		<div class:list={["grid gap-2 mt-4", gridClass]}>
 			{images.map((src, index) => (
 				<a
-					href={src}
+					href={cdnImage(src)}
 					class:list={[
 						"group relative overflow-hidden rounded-xl bg-(--btn-regular-bg) active:scale-[0.98] transition",
 						imageCount === 1 ? "aspect-4/3" : "aspect-square",
 					]}
 				>
 					<img
-						src={src}
+						src={cdnImage(src)}
 						alt={`${i18n(I18nKey.momentsImage, lang)} ${index + 1}`}
 						loading="lazy"
 						class="w-full h-full object-cover transition duration-300 group-hover:scale-105"

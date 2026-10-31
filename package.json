@@ -5,6 +5,8 @@
 	"scripts": {
 		"dev": "astro dev",
 		"build": "astro build && pagefind --site dist",
+		"publish": "node --env-file=.env scripts/sync-images.mjs && astro build && pagefind --site dist",
+		"sync-images": "node --env-file=.env scripts/sync-images.mjs",
 		"preview": "astro preview",
 		"astro": "astro",
 		"check": "pnpm run astro-check && pnpm run type-check && pnpm run svelte-check",
@@ -71,6 +73,7 @@
 	"devDependencies": {
 		"@astrojs/check": "^0.9.10",
 		"@astrojs/ts-plugin": "^1.10.11",
+		"@aws-sdk/client-s3": "^3.1160.0",
 		"@biomejs/biome": "2.5.12",
 		"@rollup/plugin-yaml": "^5.0.0",
 		"@types/hast": "^3.0.5",

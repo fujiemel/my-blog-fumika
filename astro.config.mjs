@@ -1,3 +1,4 @@
+import { readFileSync } from "node:fs";
 import { unified } from "@astrojs/markdown-remark";
 import partytown from "@astrojs/partytown";
 import sitemap from "@astrojs/sitemap";
@@ -22,6 +23,7 @@ import I18nKey from "./src/i18n/i18nKey.ts";
 import { i18n } from "./src/i18n/translation.ts";
 import { pluginCustomCopyButton } from "./src/plugins/expressive-code/custom-copy-button.js";
 import { pluginLanguageBadge } from "./src/plugins/expressive-code/language-badge.ts";
+import { rehypeCdnImage } from "./src/plugins/rehype-cdn-image.mjs";
 import { AdmonitionComponent } from "./src/plugins/rehype-component-admonition.mjs";
 import { GithubCardComponent } from "./src/plugins/rehype-component-github-card.mjs";
 import { rehypeLazyLoadImage } from "./src/plugins/rehype-lazy-load-image.mjs";
@@ -33,6 +35,19 @@ import { remarkReadingTime } from "./src/plugins/remark-reading-time.mjs";
 import { remarkRuby } from "./src/plugins/remark-ruby.mjs";
 
 // https://astro.build/config
+// 读取 .env 中的 CDN 地址供正文图片映射；文件不存在或未配置时图片仍走本地
+function readCdnBase() {
+	if (process.env.R2_PUBLIC_URL) return process.env.R2_PUBLIC_URL;
+	try {
+		const text = readFileSync(new URL(".env", import.meta.url), "utf8");
+		return /^R2_PUBLIC_URL=(.+)$/m.exec(text)?.[1]?.trim() ?? "";
+	} catch {
+		return "";
+	}
+}
+
+const cdnBaseUrl = readCdnBase();
+
 export default defineConfig({
 	site: deployConfig.siteUrl,
 	base: deployConfig.baseUrl,
@@ -131,6 +146,7 @@ export default defineConfig({
 				rehypeKatex,
 				rehypeSlug,
 				rehypeLazyLoadImage,
+				[rehypeCdnImage, cdnBaseUrl],
 				rehypeMermaidClient,
 				[
 					rehypeComponents,

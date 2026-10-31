@@ -6,6 +6,7 @@ import { DEFAULT_LANG, SUPPORTED_LANG } from "@constants/constants";
 import I18nKey from "@i18n/i18nKey";
 import { i18n } from "@i18n/translation";
 import MainGridLayout from "@layouts/MainGridLayout.astro";
+import { cdnImage } from "@utils/cdn";
 import { getSortedMoments } from "@utils/content-utils";
 import { url } from "@utils/url-utils";
 import type { GetStaticPaths } from "astro";
@@ -93,14 +94,14 @@ const gridClass = ["grid-cols-1", "grid-cols-2", "grid-cols-3"][
 				<div class:list={["grid gap-2 mt-5", gridClass]}>
 					{images.map((src, index) => (
 						<a
-							href={src}
+							href={cdnImage(src)}
 							class:list={[
 								"group relative overflow-hidden rounded-xl bg-(--btn-regular-bg) active:scale-[0.98] transition",
 								imageCount === 1 ? "aspect-4/3" : "aspect-square",
 							]}
 						>
 							<img
-								src={src}
+								src={cdnImage(src)}
 								alt={`${i18n(I18nKey.momentsImage, lang)} ${index + 1}`}
 								loading="lazy"
 								class="w-full h-full object-cover transition duration-300 group-hover:scale-105"
