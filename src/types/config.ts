@@ -4,7 +4,6 @@ import type {
 	DARK_MODE,
 	LIGHT_MODE,
 } from "@constants/constants";
-import type * as Giscus from "@giscus/svelte";
 
 export type ConfigLang =
 	| "en"
@@ -126,37 +125,62 @@ export type GetSortedPosts = {
 	filePath?: string;
 };
 
-export type GiscusConfig = {
-	repo: Giscus.Repo;
-	host?: string;
-	repoId: string;
-	category: string;
-	categoryId: string;
-	mapping?: Giscus.Mapping;
-	term?: string;
-	strict?: Giscus.BooleanString;
-	reactionsEnabled?: Giscus.BooleanString;
-	emitMetadata?: Giscus.BooleanString;
-	inputPosition?: Giscus.InputPosition;
-	theme?: Giscus.Theme;
-	lang?: Giscus.AvailableLanguage;
-	loading?: Giscus.Loading;
+export type WalineConfig = {
+	serverURL: string;
+	lang?: string;
+	login?: "enable" | "disable" | "force";
+	visitorCount?: boolean;
+	reaction?: boolean;
+	meta?: ("nick" | "mail" | "link")[];
+	requiredMeta?: ("nick" | "mail" | "link")[];
+	pageSize?: number;
 };
 
 export type CommentConfig = {
-	giscus?: GiscusConfig;
-	disqus?: null;
-	twikoo?: null;
+	waline?: WalineConfig;
 };
 
 export type GoogleAnalytics = {
 	id: string;
 };
 
+export type UmamiConfig = {
+	/** Umami 统计脚本地址，如 https://umami.example.com/script.js */
+	scriptUrl: string;
+	/** 站点在 Umami 后台的 Website ID */
+	websiteId: string;
+	/** 单页应用切换时手动上报访问，避免漏记 */
+	trackPath?: boolean;
+};
+
 export type AnalyticsConfig = {
 	enabled: boolean;
 	google?: GoogleAnalytics;
-	umami?: null;
+	umami?: UmamiConfig;
+};
+
+export type FooterConfig = {
+	enable: boolean;
+	/** 站点上线时间，用于计算「已稳定运行」时长，格式 YYYY-MM-DD。留空则不显示 */
+	since?: string;
+	/** 正式 ICP 备案（工信部），留空则不显示 */
+	icp?: {
+		text: string;
+		url: string;
+	};
+	/** 娱乐性质的萌 ICP 备案，留空则不显示 */
+	moeIcp?: {
+		text: string;
+		url: string;
+	};
+	/** 公安联网备案信息，留空则不显示 */
+	gongan?: {
+		/** 备案号文本，如 京公网安备11010502030146号 */
+		text: string;
+		url: string;
+	};
+	/** 追加到页脚的自定义 HTML，会原样渲染 */
+	customHtml?: string;
 };
 
 export type DeployConfig = {

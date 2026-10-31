@@ -1,0 +1,52 @@
+---
+interface Props {
+	since: string;
+}
+const { since } = Astro.props;
+---
+
+<span class="site-runtime" data-since={since}>正在计算…</span>
+
+<script>
+function formatRuntime(since: string): string {
+	const start = new Date(`${since}T00:00:00`).getTime();
+	if (Number.isNaN(start)) return "";
+
+	const diff = Date.now() - start;
+	if (diff < 0) return "";
+
+	let rest = Math.floor(diff / 1000);
+	const days = Math.floor(rest / 86400);
+	rest -= days * 86400;
+	const hours = Math.floor(rest / 3600);
+	rest -= hours * 3600;
+	const minutes = Math.floor(rest / 60);
+	const seconds = rest - minutes * 60;
+
+	const pad = (n: number) => String(n).padStart(2, "0");
+	return `${days} 天 ${pad(hours)} 小时 ${pad(minutes)} 分 ${pad(seconds)} 秒`;
+}
+
+function updateRuntime() {
+	// 桌面端和移动端页脚同时存在于 DOM 中，逐个更新
+	for (const el of document.querySelectorAll<HTMLElement>(".site-runtime")) {
+		const since = el.dataset.since;
+		if (!since) continue;
+
+		const text = formatRuntime(since);
+		if (text) el.textContent = text;
+	}
+}
+
+let timer: number | undefined;
+
+function startRuntime() {
+	window.clearInterval(timer);
+	updateRuntime();
+	timer = window.setInterval(updateRuntime, 1000);
+}
+
+startRuntime();
+// Swup 切换页面会重建页脚，需重新启动计时
+window.swup?.hooks?.on("page:view", startRuntime);
+</script>

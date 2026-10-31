@@ -1,27 +1,19 @@
 ---
-import type { CollectionEntry } from "astro:content";
 import { commentConfig } from "@/config";
-
-import Giscus from "./Giscus.svelte";
+import Waline from "./Waline.astro";
 
 interface Props {
-	post?: CollectionEntry<"posts">;
 	lang?: string;
 }
-const { lang } = Astro.props;
 
-// const { post } = Astro.props;
-// const path = post ? `/posts/${post.id}` : Astro.url.pathname;
-// const url = `${Astro.site?.href || Astro.url.origin}${path}`;
-
-let commentService = "";
-if (commentConfig?.giscus) {
-	commentService = "giscus";
-}
+// 未配置 serverURL 时 Waline 自身不渲染内容
+const enabled = Boolean(commentConfig.waline?.serverURL?.trim());
 ---
 
-<div class="card-base p-6 mb-4">
-	<!-- TODO sometimes Giscus theme color not reactive -->
-  {commentService === 'giscus' && <Giscus client:only="svelte" lang={lang} />}
-  {commentService === '' && null }
-</div>
+{
+	enabled && (
+		<div class="card-base p-6 mb-4">
+			<Waline />
+		</div>
+	)
+}

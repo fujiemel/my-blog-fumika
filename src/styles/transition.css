@@ -4,8 +4,9 @@
 html.is-changing .transition-swup-fade {
 	@apply transition-all duration-200;
 }
+/* 只淡出、不位移：位移会与内容入场动画的 translateY 叠加，产生「先下沉再上浮」的抽动 */
 html.is-animating .transition-swup-fade {
-	@apply opacity-0 translate-y-4;
+	@apply opacity-0;
 }
 
 /* Fade-in animations for components */

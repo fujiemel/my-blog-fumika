@@ -25,6 +25,7 @@ export const zh_TW: Translation = {
 	[Key.minutesCount]: "分鐘",
 	[Key.postCount]: "篇文章",
 	[Key.postsCount]: "篇文章",
+	[Key.postLabel]: "文章",
 
 	[Key.more]: "更多",
 

@@ -8,6 +8,12 @@
   [role="button"]:not(:disabled) {
     cursor: pointer;
   }
+
+  /* 始终为滚动条预留槽位：页面切换时 #page-height-extend 会让内容变高、
+     滚动条出现或消失，内容区随之左移再复位，表现为横向抽动 */
+  html {
+    scrollbar-gutter: stable;
+  }
 }
 
 @theme {

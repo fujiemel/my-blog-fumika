@@ -25,6 +25,7 @@ export const fa: Translation = {
 	[Key.minutesCount]: "دقیقه",
 	[Key.postCount]: "مقاله",
 	[Key.postsCount]: "مقالات",
+	[Key.postLabel]: "مقاله",
 
 	[Key.more]: "بیشتر",
 

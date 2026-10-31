@@ -53,7 +53,6 @@ export default defineConfig({
 		}),
 		icon({
 			include: {
-				"preprocess: vitePreprocess(),": ["*"],
 				"fa6-brands": ["*"],
 				"fa6-regular": ["*"],
 				"fa6-solid": ["*"],
@@ -175,6 +174,8 @@ export default defineConfig({
 	vite: {
 		plugins: [tailwindcss()],
 		build: {
+			// mermaid / katex 由动态 import 按需加载，体积本身较大
+			chunkSizeWarningLimit: 1024,
 			rollupOptions: {
 				onwarn(warning, warn) {
 					// temporarily suppress this warning

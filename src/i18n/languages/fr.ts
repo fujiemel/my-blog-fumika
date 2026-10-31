@@ -25,6 +25,7 @@ export const fr: Translation = {
 	[Key.minutesCount]: "minutes",
 	[Key.postCount]: "post",
 	[Key.postsCount]: "posts",
+	[Key.postLabel]: "post",
 
 	[Key.more]: "Plus",
 

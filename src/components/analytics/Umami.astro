@@ -1,0 +1,37 @@
+---
+import { analyticsConfig } from "@/config";
+
+const umami = analyticsConfig.umami;
+const scriptUrl = umami?.scriptUrl?.trim() ?? "";
+const websiteId = umami?.websiteId?.trim() ?? "";
+
+const enabled = analyticsConfig.enabled && Boolean(scriptUrl && websiteId);
+---
+
+{
+	enabled && (
+		<script
+			is:inline
+			defer
+			src={scriptUrl}
+			data-website-id={websiteId}
+			data-auto-track={umami?.trackPath === false ? "false" : "true"}
+		/>
+	)
+}
+
+{
+	enabled && umami?.trackPath !== false && (
+		<script>
+			// Umami 的 data-auto-track 只在首次加载时上报，Swup 切换页面需手动补报
+			type Umami = { track: (payload?: Record<string, unknown>) => void };
+
+			function trackPageview() {
+				const umami = (window as unknown as { umami?: Umami }).umami;
+				umami?.track();
+			}
+
+			window.swup?.hooks?.on("page:view", trackPageview);
+		</script>
+	)
+}

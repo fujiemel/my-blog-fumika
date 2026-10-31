@@ -1,0 +1,105 @@
+---
+import { commentConfig } from "@/config";
+
+const waline = commentConfig.waline;
+const serverURL = waline?.serverURL?.trim() ?? "";
+
+// 未配置服务端时不渲染评论区，避免请求打到空地址
+const enabled = Boolean(serverURL);
+---
+
+{
+	enabled && (
+		<div
+			id="waline"
+			data-server-url={serverURL}
+			data-lang={waline?.lang ?? "zh-CN"}
+			data-login={waline?.login ?? "enable"}
+			data-page-size={waline?.pageSize ?? 10}
+			data-visitor-count={String(waline?.visitorCount ?? true)}
+			data-reaction={String(waline?.reaction ?? false)}
+			data-meta={JSON.stringify(waline?.meta ?? ["nick", "mail", "link"])}
+			data-required-meta={JSON.stringify(waline?.requiredMeta ?? [])}
+		/>
+	)
+}
+
+{
+	enabled && (
+		<script>
+			import "@waline/client/style";
+
+			type WalineInstance = { destroy: () => void };
+
+			let instance: WalineInstance | null = null;
+			// 与页面一一对应，Swup 离开时用它判断实例是否已过期
+			let mountedPath = "";
+
+			async function mountWaline() {
+				const container = document.getElementById("waline");
+				if (!container) return;
+
+				const serverURL = container.dataset.serverUrl;
+				if (!serverURL) return;
+
+				// 同一页面重复触发（例如 Swup 的多次 hook）时跳过
+				if (instance && mountedPath === window.location.pathname) return;
+
+				instance?.destroy();
+				instance = null;
+				mountedPath = "";
+				container.innerHTML = "";
+				container.classList.add("waline-loading");
+
+				try {
+					const { init } = await import("@waline/client");
+
+					// 动态加载期间用户可能已切走
+					if (!container.isConnected) return;
+
+					instance = init({
+						el: container,
+						serverURL,
+						path: window.location.pathname,
+						lang: container.dataset.lang || "zh-CN",
+						login: (container.dataset.login || "enable") as
+							| "enable"
+							| "disable"
+							| "force",
+						pageSize: Number(container.dataset.pageSize) || 10,
+						// 阅读量交给 Umami 统计，这里关闭避免重复计数
+						pageview: false,
+						comment: container.dataset.visitorCount !== "false",
+						reaction: container.dataset.reaction === "true",
+						meta: JSON.parse(container.dataset.meta || "[]"),
+						requiredMeta: JSON.parse(container.dataset.requiredMeta || "[]"),
+						dark: "html.dark",
+						// 评论内容由 Waline 自行处理，不进入 Pagefind 索引
+						noRss: false,
+					}) as WalineInstance | null;
+
+					mountedPath = window.location.pathname;
+				} catch (error) {
+					console.error("Waline 加载失败：", error);
+				} finally {
+					container.classList.remove("waline-loading");
+				}
+			}
+
+			// 页面切换前销毁，避免旧实例继续占用 DOM 和定时器
+			function unmountWaline() {
+				instance?.destroy();
+				instance = null;
+				mountedPath = "";
+			}
+
+			mountWaline();
+
+			const swup = window.swup;
+			if (swup) {
+				swup.hooks.on("page:view", mountWaline);
+				swup.hooks.on("content:replace", unmountWaline, { before: true });
+			}
+		</script>
+	)
+}

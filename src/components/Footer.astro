@@ -1,21 +1,113 @@
 ---
-
-import { profileConfig } from "../config";
+import { footerConfig, profileConfig } from "../config";
 import { url } from "../utils/url-utils";
+import SiteRuntime from "./misc/SiteRuntime.astro";
 
 const currentYear = new Date().getFullYear();
 ---
 
-<!--<div class="border-t border-[var(--primary)] mx-16 border-dashed py-8 max-w-[var(--page-width)] flex flex-col items-center justify-center px-6">-->
-<div class="transition border-t border-black/10 dark:border-white/15 my-10 border-dashed mx-32"></div>
-<!--<div class="transition bg-[oklch(92%_0.01_var(--hue))] dark:bg-black rounded-2xl py-8 mt-4 mb-8 flex flex-col items-center justify-center px-6">-->
-<div class="transition border-dashed border-[oklch(85%_0.01_var(--hue))] dark:border-white/15 rounded-2xl mb-12 flex flex-col items-center justify-center px-6">
-    <div class="transition text-50 text-sm text-center">
-        &copy; <span id="copyright-year">{currentYear}</span> {profileConfig.name}. All Rights Reserved. / {""}
-        <a class="transition link text-(--primary) font-medium" target="_blank" href={url('rss.xml')}>RSS</a> / {""}
-        <a class="transition link text-(--primary) font-medium" target="_blank" href={url('sitemap-index.xml')}>Sitemap</a><br>
-        Powered by {""}
-        <a class="transition link text-(--primary) font-medium" target="_blank" href="https://astro.build">Astro</a> & {""}
-        <a class="transition link text-(--primary) font-medium" target="_blank" href="https://github.com/iyanarmanda/fumika">Fumika</a>
-    </div>
-</div>
+{
+	footerConfig.enable && (
+		<>
+			<div class="transition border-t border-black/10 dark:border-white/15 my-10 border-dashed mx-32" />
+			<div class="transition border-dashed border-[oklch(85%_0.01_var(--hue))] dark:border-white/15 rounded-2xl mb-12 flex flex-col items-center justify-center px-6 gap-2">
+				<div class="transition text-50 text-sm text-center">
+					&copy; <span id="copyright-year">{currentYear}</span>{" "}
+					{profileConfig.name}. All Rights Reserved. /{" "}
+					<a
+						class="transition link text-(--primary) font-medium"
+						target="_blank"
+						rel="noopener noreferrer"
+						href={url("rss.xml")}
+					>
+						RSS
+					</a>{" "}
+					/{" "}
+					<a
+						class="transition link text-(--primary) font-medium"
+						target="_blank"
+						rel="noopener noreferrer"
+						href={url("sitemap-index.xml")}
+					>
+						Sitemap
+					</a>
+					<br />
+					Powered by{" "}
+					<a
+						class="transition link text-(--primary) font-medium"
+						target="_blank"
+						rel="noopener noreferrer"
+						href="https://astro.build"
+					>
+						Astro
+					</a>{" "}
+					&{" "}
+					<a
+						class="transition link text-(--primary) font-medium"
+						target="_blank"
+						rel="noopener noreferrer"
+						href="https://github.com/iyanarmanda/fumika"
+					>
+						Fumika
+					</a>
+				</div>
+
+				{footerConfig.since && (
+					<div class="transition text-50 text-sm text-center">
+						本站已稳定运行：<SiteRuntime since={footerConfig.since} />
+					</div>
+				)}
+
+				{(footerConfig.icp || footerConfig.moeIcp || footerConfig.gongan) && (
+					<div class="transition text-50 text-sm text-center flex flex-wrap items-center justify-center gap-x-3 gap-y-1">
+						{footerConfig.icp && (
+							<a
+								class="transition link text-(--primary) font-medium"
+								target="_blank"
+								rel="noopener noreferrer"
+								href={footerConfig.icp.url}
+							>
+								{footerConfig.icp.text}
+							</a>
+						)}
+						{footerConfig.moeIcp && (
+							<a
+								class="transition link text-(--primary) font-medium"
+								target="_blank"
+								rel="noopener noreferrer"
+								href={footerConfig.moeIcp.url}
+							>
+								{footerConfig.moeIcp.text}
+							</a>
+						)}
+						{footerConfig.gongan && (
+							<a
+								class="transition link text-(--primary) font-medium inline-flex items-center gap-1"
+								target="_blank"
+								rel="noopener noreferrer"
+								href={footerConfig.gongan.url}
+							>
+								<img
+									src="/image/beian/gongan.png"
+									alt="公安备案图标"
+									width="14"
+									height="15"
+									class="inline-block"
+									loading="lazy"
+								/>
+								{footerConfig.gongan.text}
+							</a>
+						)}
+					</div>
+				)}
+
+				{footerConfig.customHtml && (
+					<div
+						class="transition text-50 text-sm text-center"
+						set:html={footerConfig.customHtml}
+					/>
+				)}
+			</div>
+		</>
+	)
+}

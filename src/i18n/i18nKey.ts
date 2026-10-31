@@ -22,6 +22,7 @@ enum I18nKey {
 	minutesCount = "minutesCount",
 	postCount = "postCount",
 	postsCount = "postsCount",
+	postLabel = "postLabel",
 
 	more = "more",
 

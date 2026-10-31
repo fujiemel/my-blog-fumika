@@ -1,4 +1,4 @@
-import { type CollectionEntry, getCollection } from "astro:content";
+import { type CollectionEntry, getCollection, render } from "astro:content";
 import { DEFAULT_LANG, SUPPORTED_LANG } from "@constants/constants";
 import I18nKey from "@i18n/i18nKey";
 import { getTranslation } from "@i18n/translation";
@@ -234,5 +234,36 @@ export async function getSortedMoments(): Promise<Moment[]> {
 
 	return moments.sort(
 		(a, b) => b.data.published.getTime() - a.data.published.getTime(),
+	);
+}
+
+export type MomentWithExcerpt = Moment & { excerpt: string };
+
+/** 去掉 markdown 语法和多余空白，截取适合放进时间轴的一行摘要 */
+function toExcerpt(body: string, maxLength = 20): string {
+	const text = body
+		.replace(/```[\s\S]*?```/g, " ")
+		.replace(/!\[[^\]]*\]\([^)]*\)/g, " ")
+		.replace(/\[([^\]]*)\]\([^)]*\)/g, "$1")
+		.replace(/^#{1,6}\s+/gm, "")
+		.replace(/[>*_~`]/g, "")
+		.replace(/\s+/g, " ")
+		.trim();
+
+	if (text.length <= maxLength) return text;
+	return `${text.slice(0, maxLength)}…`;
+}
+
+/** 带正文摘要的说说列表，供归档时间轴使用 */
+export async function getMomentsWithExcerpt(): Promise<MomentWithExcerpt[]> {
+	const moments = await getSortedMoments();
+
+	return Promise.all(
+		moments.map(async (moment): Promise<MomentWithExcerpt> => {
+			const { remarkPluginFrontmatter } = await render(moment);
+			const raw = (remarkPluginFrontmatter as { excerpt?: string }).excerpt;
+
+			return { ...moment, excerpt: raw ? toExcerpt(raw) : "" };
+		}),
 	);
 }

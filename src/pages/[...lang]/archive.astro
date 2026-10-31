@@ -5,7 +5,10 @@ import I18nKey from "@i18n/i18nKey";
 import { i18n } from "@i18n/translation";
 import MainGridLayout from "@layouts/MainGridLayout.astro";
 import type { GetStaticPaths } from "astro";
-import { getSortedPostsList } from "../../utils/content-utils";
+import {
+	getMomentsWithExcerpt,
+	getSortedPostsList,
+} from "../../utils/content-utils";
 
 export const getStaticPaths = (async () => {
 	return SUPPORTED_LANG.map((lang) => ({
@@ -18,10 +21,15 @@ export const getStaticPaths = (async () => {
 
 const { lang } = Astro.props;
 const sortedPostsList = await getSortedPostsList(lang);
+// 说说与文章混排进同一条时间轴
+const sortedMoments = await getMomentsWithExcerpt();
 ---
 
 <MainGridLayout title={i18n(I18nKey.archive, lang)} lang={lang}>
-    <!-- @ts-expect-error ts(9013) - (temporary solutions) -->
-    <ArchivePanel sortedPosts={sortedPostsList} lang={lang} client:only="svelte"></ArchivePanel>
+    <ArchivePanel
+        sortedPosts={sortedPostsList}
+        sortedMoments={sortedMoments}
+        lang={lang}
+        client:load
+    />
 </MainGridLayout>
-
