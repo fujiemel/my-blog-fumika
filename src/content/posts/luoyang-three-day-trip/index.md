@@ -19,21 +19,21 @@ draft: false
 
 25号中午吃完饭，乘坐出租车前往安阳火车站，硬座两小时抵达神都洛阳 农村人进城了！
 
-![](https://blog-images.395718.xyz/external/img/go-luoyang.webp)
+![](https://blog-images.395718.xyz/posts/luoyang-three-day-trip/001.webp)
 
 ## 第0天
 
 出火车站已经临近傍晚，先去了火车站右前方宝龙大厦，在美团上订了个青旅40元一晚，我也是第一次住青旅(临栖·临时栖息·青年旅舍)个人感觉的话环境还可以，挺干净的，四人间，有空调洗浴洗衣机不限量的矿泉水，洗漱用品，门口就是公交车站，去哪都挺方便。 **景点**：应天门 明堂天堂
 
-![](https://blog-images.395718.xyz/external/img/luoyang-20250825_175918.webp)
+![](https://blog-images.395718.xyz/posts/luoyang-three-day-trip/002.webp)
 
 翻翻旅游攻略，来洛阳的第一站去了应天门，骑小黄车去的有点远，主要看看沿途有啥好玩的。 正常还是坐公交方便，洛阳公交车，不管有没有人每站都停一下，挺惊讶的。
 
 ### 应天门
 
-![](https://blog-images.395718.xyz/external/img/luoyang-20250825_200339519.webp)
+![](https://blog-images.395718.xyz/posts/luoyang-three-day-trip/003.webp)
 
-![](https://blog-images.395718.xyz/external/img/luoyang-20250825_201928471.webp)
+![](https://blog-images.395718.xyz/posts/luoyang-three-day-trip/004.webp)
 
 应天门作为洛阳的标志性建筑，自然不用多说，骑车从远处缓缓接近，头一次还是挺震撼的，站在城墙底下往上看，很好看，至于花点钱上二楼，我穷游没去。 应天门周围一圈都有古装店，路上古装随处可见，当然男女基本上一眼就能看出来，抖音上都是妆加美颜，不易看出(天生丽质除外)。 应天门门口的广场上全是商拍，密密麻麻的补光灯，摄像师，走路都别扭(听说改了)。
 
@@ -41,9 +41,9 @@ draft: false
 
 应天门的对面就是明堂天堂门票90￥，我未成年学生票45￥。 **明堂天堂**分为：**明堂**和**天堂**(扁的是明堂，高的是天堂) <p>
 
-![](https://blog-images.395718.xyz/external/img/luoyang-20250825_202321283.webp)
+![](https://blog-images.395718.xyz/posts/luoyang-three-day-trip/005.webp)
 
-![](https://blog-images.395718.xyz/external/img/luoyang-20250825_205139293.webp)
+![](https://blog-images.395718.xyz/posts/luoyang-three-day-trip/006.webp)
 
 </p>
 
@@ -51,19 +51,19 @@ draft: false
 
 走进去，一眼就是明堂，坐落于洛阳中轴线上，一个圆形，四面有阶梯，站在明堂上可以清晰看到对面应天门晚上的开灯秀(10分钟左右)。 明堂里头金碧辉煌，中间可以花钱上去拍照
 
-![](https://blog-images.395718.xyz/external/img/luoyang-20250825_202459668.webp)
+![](https://blog-images.395718.xyz/posts/luoyang-three-day-trip/007.webp)
 
-![](https://blog-images.395718.xyz/external/img/luoyang-20250825_202629429.webp)
+![](https://blog-images.395718.xyz/posts/luoyang-three-day-trip/008.webp)
 
 ##### 天堂
 
 就是一个高高的圆柱子，~~没啥可看的~~ 顶多爬上去俯瞰一下洛阳，上头望远镜要花钱 有电梯，但忘记了好像是只能下不能上，上得爬楼梯，还挺高
 
-![](https://blog-images.395718.xyz/external/img/luoyang-20250825_203011248.webp)
+![](https://blog-images.395718.xyz/posts/luoyang-three-day-trip/009.webp)
 
-![](https://blog-images.395718.xyz/external/img/luoyang-20250825_205615720.webp)
+![](https://blog-images.395718.xyz/posts/luoyang-three-day-trip/010.webp)
 
-![](https://blog-images.395718.xyz/external/img/luoyang-20250825_210512517.webp)
+![](https://blog-images.395718.xyz/posts/luoyang-three-day-trip/011.webp)
 
 ## 第一天
 
@@ -115,9 +115,9 @@ Missing image nal/img/luoayng-20250826_145223187.webp
 
 博物馆的景点都在地下，要钻地道，有点阴冷
 
-![](https://blog-images.395718.xyz/external/img/luoyang-20250826_150119576.webp)
+![](https://blog-images.395718.xyz/posts/luoyang-three-day-trip/012.webp)
 
-![](https://blog-images.395718.xyz/external/img/luoyang-20250826_152145331.webp)
+![](https://blog-images.395718.xyz/posts/luoyang-three-day-trip/013.webp)
 
 没啥好说的历史悠久，没报团，看过了就看过了，我也讲不出个花了 这里网上出名一点的就是手中无剑，影子里有剑，其实就是错位 回去补觉
 
@@ -125,11 +125,11 @@ Missing image nal/img/luoayng-20250826_145223187.webp
 
 乘坐地铁前往，其实公交车更方便，主要是还没坐过洛阳的地铁，体验一下。 龙门石窟只有在天将黑未黑时才是最美的，建议下午去，天亮的时候可以看清佛像，黑的时候开灯真壮观。 中间大佛，只有在现场看到才震撼，爬上楼梯，抬头仰望的时候门票90￥它就已经值了，虽然我是半票40￥(😄)
 
-![](https://blog-images.395718.xyz/external/img/luoyang-20250826_190904957.webp)
+![](https://blog-images.395718.xyz/posts/luoyang-three-day-trip/014.webp)
 
-![](https://blog-images.395718.xyz/external/img/luoyang-20250826_194815563.webp)
+![](https://blog-images.395718.xyz/posts/luoyang-three-day-trip/015.webp)
 
-![](https://blog-images.395718.xyz/external/img/luoyang20250826_200802393.webp)
+![](https://blog-images.395718.xyz/posts/luoyang-three-day-trip/016.webp)
 
 路线：景区入口 → 西山石窟→ 过漫水桥 → 东山石窟→ 香山寺→ 白园 就是从龙门进直走，中途就是大佛，走到头左拐有个桥过去，再直走就出去了 差评：门口商业太发达，要走好久才进景点，出去也是，风景没得说，妙中妙，必看 一天就结束了，累呀，晚饭回青旅点外卖，实在不知道吃啥好了，我对吃的从来都是能吃就行
 

@@ -53,8 +53,14 @@ export const navBarConfig: NavBarConfig = {
 		LinkPreset.Home,
 		LinkPreset.Moments,
 		LinkPreset.Archive,
-		LinkPreset.About,
 		LinkPreset.Friends,
+		LinkPreset.About,
+		{
+			name: "开往", // 开往 Travellings
+			url: "https://www.travellings.cn/train.html",
+			external: true,
+			// icon: "fa6-solid:train-subway",
+		},
 	],
 };
 
@@ -86,7 +92,7 @@ export const expressiveCodeConfig: ExpressiveCodeConfig = {
 // 评论系统（Waline）。serverURL 留空则全站不显示评论区
 export const commentConfig: CommentConfig = {
 	waline: {
-		serverURL: "", // 例如 https://waline.example.com
+		serverURL: "https://instance.waline.infvar.com/limiverse", // 例如 https://waline.example.com
 		lang: "zh-CN",
 		login: "enable", // 允许匿名评论，同时支持登录
 		visitorCount: true, // 显示阅读量
@@ -105,8 +111,8 @@ export const analyticsConfig: AnalyticsConfig = {
 	//	 id: "G-xxx",
 	// },
 	umami: {
-		scriptUrl: "", // 例如 https://umami.example.com/script.js
-		websiteId: "", // Umami 后台的 Website ID
+		scriptUrl: "https://cloud.umami.is/script.js", // 例如 https://umami.example.com/script.js
+		websiteId: "ce42d32d-7a1a-4e52-9f13-75ccdd7e3678", // Umami 后台的 Website ID
 		trackPath: true,
 	},
 };

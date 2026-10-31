@@ -72,6 +72,8 @@ export type NavBarLink = {
 	name: string;
 	url: string;
 	external?: boolean;
+	/** 可选的图标名，需为 astro-icon 支持的格式，如 material-symbols:link */
+	icon?: string;
 };
 
 export type NavBarConfig = {
