@@ -3,6 +3,7 @@ import { onMount } from "svelte";
 
 import I18nKey from "../i18n/i18nKey";
 import { i18n } from "../i18n/translation";
+import { formatMonthDay, getSiteYear } from "../utils/date-utils";
 import { getMomentUrlBySlug, getPostUrlBySlug } from "../utils/url-utils";
 
 export let sortedPosts: Post[] = [];
@@ -46,12 +47,6 @@ interface Filter {
 	tags: string[];
 	categories: string[];
 	uncategorized: boolean;
-}
-
-function formatDate(date: Date) {
-	const month = (date.getMonth() + 1).toString().padStart(2, "0");
-	const day = date.getDate().toString().padStart(2, "0");
-	return `${month}-${day}`;
 }
 
 function filterPosts(posts: Post[], filter: Filter): Post[] {
@@ -112,7 +107,7 @@ function buildGroups(filter: Filter): Group[] {
 
 	const grouped = entries.reduce(
 		(acc, entry) => {
-			const year = entry.date.getFullYear();
+			const year = getSiteYear(entry.date);
 			if (!acc[year]) {
 				acc[year] = [];
 			}
@@ -195,7 +190,7 @@ onMount(() => {
                     >
                         <div class="flex flex-row justify-start items-center h-full">
                             <div class="w-[15%] md:w-[10%] transition text-sm text-right text-50">
-                                {formatDate(entry.date)}
+                                {formatMonthDay(entry.date)}
                             </div>
 
                             <div class="w-[15%] md:w-[10%] relative dash-line h-full flex items-center">
@@ -226,12 +221,12 @@ onMount(() => {
                 {:else}
                     <a
                             href={getMomentUrlBySlug(entry.moment.id, lang)}
-                            aria-label={`${i18n(I18nKey.moments, lang)} ${formatDate(entry.date)}`}
+                            aria-label={`${i18n(I18nKey.moments, lang)} ${formatMonthDay(entry.date)}`}
                             class="group btn-plain block! h-10 w-full rounded-lg hover:text-[initial]"
                     >
                         <div class="flex flex-row justify-start items-center h-full">
                             <div class="w-[15%] md:w-[10%] transition text-sm text-right text-50">
-                                {formatDate(entry.date)}
+                                {formatMonthDay(entry.date)}
                             </div>
 
                             <!-- 说说用空心小圆点，与文章节点区分 -->

@@ -1,0 +1,60 @@
+/* 图片占位：加载中骨架 + 加载失败兜底 */
+
+img[data-img-state="pending"] {
+	/* 占位底色与内容都让位给骨架，避免半透明图片叠加在动效上 */
+	background-color: var(--btn-regular-bg);
+	background-image: linear-gradient(
+		100deg,
+		transparent 35%,
+		rgba(255, 255, 255, 0.22) 50%,
+		transparent 65%
+	);
+	background-size: 200% 100%;
+	background-repeat: no-repeat;
+	animation: img-placeholder-shimmer 1.2s linear infinite;
+	/* 图片加载完成前浏览器会显示 alt 文本，这里先隐藏，加载完成即恢复 */
+	color: transparent;
+}
+
+img[data-img-state="loaded"] {
+	animation: img-placeholder-fade 240ms ease-out both;
+}
+
+img[data-img-state="error"] {
+	object-fit: contain !important;
+	background-color: var(--btn-regular-bg);
+	animation: none;
+}
+
+/* 占位图也加载失败时（极端情况）至少保留底色 */
+img[data-img-state="error"].img-fallback-broken {
+	background-image: none;
+}
+
+@keyframes img-placeholder-shimmer {
+	from {
+		background-position: 200% 0;
+	}
+	to {
+		background-position: -200% 0;
+	}
+}
+
+@keyframes img-placeholder-fade {
+	from {
+		opacity: 0.4;
+	}
+	to {
+		opacity: 1;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	img[data-img-state="pending"] {
+		animation: none;
+	}
+
+	img[data-img-state="loaded"] {
+		animation: none;
+	}
+}

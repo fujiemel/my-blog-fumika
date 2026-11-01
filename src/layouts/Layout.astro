@@ -13,6 +13,7 @@ import "@styles/scrollbar.css";
 import "@styles/expressive-code.css";
 import "@styles/photoswipe.css";
 import "@styles/mermaid.css";
+import "@styles/image-placeholder.css";
 
 import GoogleAnalytics from "@components/analytics/GoogleAnalytics.astro";
 import Umami from "@components/analytics/Umami.astro";
@@ -31,7 +32,7 @@ import {
 } from "../constants/constants";
 import { defaultFavicons } from "../constants/icon";
 import type { Favicon } from "../types/config";
-import { pathsEqual, url } from "../utils/url-utils";
+import { pathsEqual, siteUrl, url } from "../utils/url-utils";
 
 interface Props {
 	title?: string;
@@ -140,7 +141,7 @@ const bannerOffset =
 
 		<slot name="head"></slot>
 
-		<link rel="alternate" type="application/rss+xml" title={profileConfig.name} href={`${import.meta.env.SITE}rss.xml`}/>
+		<link rel="alternate" type="application/rss+xml" title={profileConfig.name} href={siteUrl("rss.xml")}/>
 
 	</head>
 	<body class=" min-h-screen transition " class:list={[{"is-home": isHomePage, "enable-banner": enableBanner}]}
@@ -200,6 +201,7 @@ import {
 	// ClickScrollPlugin
 } from 'overlayscrollbars';
 import {getHue, getStoredTheme, setHue, setTheme} from "../utils/setting-utils";
+import {initImagePlaceholders} from "../utils/image-placeholder";
 import {pathsEqual, url} from "../utils/url-utils";
 import {
 	BANNER_HEIGHT,
@@ -371,6 +373,7 @@ function init() {
 	loadTheme();
 	loadHue();
 	initCustomScrollbar();
+	initImagePlaceholders();
 	showBanner();
 }
 
@@ -407,7 +410,10 @@ const setup = () => {
 			navbar.classList.add('navbar-hidden')
 		}
 	})
-	window.swup.hooks.on('content:replace', initCustomScrollbar)
+	window.swup.hooks.on('content:replace', () => {
+		initCustomScrollbar();
+		initImagePlaceholders();
+	})
 	window.swup.hooks.on('visit:start', (visit: {to: {url: string}}) => {
 		// 浏览器前进/后退不触发 link:click，这里兜底清除首屏入场延迟
 		document.documentElement.style.setProperty('--content-delay', '0ms')
@@ -438,6 +444,8 @@ const setup = () => {
 		if (heightExtend) {
 			heightExtend.classList.remove('hidden')
 		}
+		// 兜底：Swup 替换后插入的图片（含评论、图库）也要接管
+		initImagePlaceholders()
 	});
 	window.swup.hooks.on('visit:end', (_visit: {to: {url: string}}) => {
 		setTimeout(() => {

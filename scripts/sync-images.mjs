@@ -222,6 +222,19 @@ async function sync() {
 				output = await fs.readFile(item.file);
 			}
 
+			// 指纹统一按「实际上传的字节」计算：
+			// 转换后的本地文件就是 webp，下次运行才能命中 manifest 跳过重传
+			const outputHash = crypto
+				.createHash("sha256")
+				.update(output)
+				.digest("hex");
+			const outputFingerprint = crypto
+				.createHash("sha256")
+				.update(outputHash)
+				.update("\0")
+				.update(PARAMS_KEY)
+				.digest("hex");
+
 			beforeBytes += item.size;
 			afterBytes += output.length;
 
@@ -236,24 +249,23 @@ async function sync() {
 					}),
 				);
 
-				// 压缩版写回本地，删除原图：本地只保留 webp
+				let manifestRel = item.rel;
 				if (item.convert) {
+					// 压缩版写回本地，删除原图：本地只保留 webp
 					const localWebp = item.file.replace(/\.[^.]+$/, ".webp");
 					await fs.writeFile(localWebp, output);
 					await fs.rm(item.file, { force: true });
-					manifest.files[item.rel] = {
-						key: item.key,
-						sourceHash: item.sourceHash,
-						fingerprint: item.fingerprint,
-						size: output.length,
-					};
-					return;
+					manifestRel = path
+						.relative(IMAGE_ROOT, localWebp)
+						.replaceAll(path.sep, "/");
+					// 原图条目作废，否则 manifest 会残留失效记录
+					delete manifest.files[item.rel];
 				}
 
-				manifest.files[item.rel] = {
+				manifest.files[manifestRel] = {
 					key: item.key,
-					sourceHash: item.sourceHash,
-					fingerprint: item.fingerprint,
+					sourceHash: outputHash,
+					fingerprint: outputFingerprint,
 					size: output.length,
 				};
 			}

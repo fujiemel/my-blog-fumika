@@ -39,12 +39,23 @@ const rendered = await Promise.all(
 );
 
 const total = page.total;
+const pageIndex = page.currentPage ?? 1;
+const lastPage = page.lastPage ?? 1;
 const description = i18n(I18nKey.moments, lang);
+// 分页页面的 title/description 加页码，避免多页 SEO 重复
+const pageTitle =
+	pageIndex > 1
+		? `${i18n(I18nKey.moments, lang)} · ${pageIndex}/${lastPage}`
+		: i18n(I18nKey.moments, lang);
+const pageDescription =
+	pageIndex > 1
+		? `${description} · ${pageIndex}/${lastPage} · ${total} ${i18n(I18nKey.momentsCount, lang)}`
+		: `${description} · ${total} ${i18n(I18nKey.momentsCount, lang)}`;
 ---
 
 <MainGridLayout
-	title={i18n(I18nKey.moments, lang)}
-	description={`${description} · ${total} ${i18n(I18nKey.momentsCount, lang)}`}
+	title={pageTitle}
+	description={pageDescription}
 	lang={lang}
 >
 	<div class="flex flex-col gap-4 mb-4">

@@ -1,5 +1,7 @@
 ---
 import { getCollection } from "astro:content";
+import { cdnImage } from "@utils/cdn";
+import { formatDateToYYYYMMDD } from "@utils/date-utils";
 import { siteUrl } from "@utils/url-utils";
 import { profileConfig, siteConfig } from "@/config";
 
@@ -10,12 +12,7 @@ interface Props {
 	setOGTypeArticle?: boolean;
 }
 
-let {
-	title,
-	description = siteConfig.subtitle,
-	image,
-	setOGTypeArticle = false,
-} = Astro.props;
+let { title, description, image, setOGTypeArticle = false } = Astro.props;
 
 let pageTitle: string;
 if (title) {
@@ -57,10 +54,11 @@ ogImage = defaultOgImage;
 if (image && typeof image === "string" && image.trim() !== "") {
 	if (image.startsWith("http://") || image.startsWith("https://")) {
 		ogImage = image;
-	} else if (image.startsWith("/media") || image.startsWith("media")) {
-		ogImage = siteUrl(image);
-	} else {
-		ogImage = defaultOgImage;
+	} else if (image.startsWith("media")) {
+		ogImage = siteUrl(`/${image}`);
+	} else if (image.startsWith("/")) {
+		const cdn = cdnImage(image);
+		ogImage = cdn === image ? siteUrl(image) : cdn;
 	}
 }
 
@@ -69,10 +67,13 @@ const formatDate = (date: Date | string | undefined): string | null => {
 		return null;
 	}
 	if (date instanceof Date) {
-		return date.toISOString().split("T")[0];
+		return formatDateToYYYYMMDD(date);
 	}
 	if (typeof date === "string") {
-		return date.split("T")[0];
+		// 纯日期字符串直接截取，带时间的交给统一格式化（按站点时区）
+		return date.length >= 10 && !date.includes("T")
+			? date.slice(0, 10)
+			: formatDateToYYYYMMDD(new Date(date));
 	}
 	return null;
 };
@@ -83,7 +84,16 @@ const updatedDate = formatDate(pageData.updated);
 const tags: string[] = pageData.tags || [];
 
 if (!description) {
-	description = pageData.description || pageTitle;
+	description = pageData.description || siteConfig.subtitle || pageTitle;
+}
+
+// 摘要里可能带换行与多余空白，meta 描述统一压成单行并限制长度
+description = String(description).replace(/\s+/g, " ").trim();
+if (description.length > 160) {
+	description = `${description.slice(0, 160)}…`;
+}
+if (!description) {
+	description = pageTitle;
 }
 ---
 

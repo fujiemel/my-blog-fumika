@@ -8,6 +8,7 @@ import { i18n } from "@i18n/translation";
 import MainGridLayout from "@layouts/MainGridLayout.astro";
 import { cdnImage } from "@utils/cdn";
 import { getSortedMoments } from "@utils/content-utils";
+import { formatDateTime } from "@utils/date-utils";
 import { url } from "@utils/url-utils";
 import type { GetStaticPaths } from "astro";
 import { Icon } from "astro-icon/components";
@@ -45,20 +46,24 @@ export const getStaticPaths = (async () => {
 }) satisfies GetStaticPaths;
 
 const { moment, lang, prev, next } = Astro.props;
-const { Content } = await render(moment);
+const { Content, remarkPluginFrontmatter } = await render(moment);
 
 const { published, location } = moment.data;
 const images: string[] = moment.data.images ?? [];
 
-const dateFormatter = new Intl.DateTimeFormat("zh-CN", {
-	year: "numeric",
-	month: "2-digit",
-	day: "2-digit",
-	hour: "2-digit",
-	minute: "2-digit",
-	hour12: false,
-});
-const dateTime = dateFormatter.format(published).replace(/\//g, "-");
+const dateTime = formatDateTime(published);
+
+// 同一天可能有多条说说，标题加入摘要避免重复
+const rawExcerpt =
+	(remarkPluginFrontmatter as { excerpt?: string }).excerpt ?? "";
+const excerpt = rawExcerpt.replace(/\s+/g, " ").trim();
+const shortExcerpt = excerpt.length > 24 ? `${excerpt.slice(0, 24)}…` : excerpt;
+const pageTitle = shortExcerpt
+	? `${i18n(I18nKey.moments, lang)} · ${shortExcerpt}`
+	: `${i18n(I18nKey.moments, lang)} · ${dateTime}`;
+const pageDescription = excerpt
+	? `${dateTime} · ${excerpt}`
+	: `${dateTime} · ${i18n(I18nKey.moments, lang)}`;
 
 const imageCount = images.length;
 const gridClass = ["grid-cols-1", "grid-cols-2", "grid-cols-3"][
@@ -67,8 +72,8 @@ const gridClass = ["grid-cols-1", "grid-cols-2", "grid-cols-3"][
 ---
 
 <MainGridLayout
-	title={`${i18n(I18nKey.moments, lang)} · ${dateTime}`}
-	description={i18n(I18nKey.moments, lang)}
+	title={pageTitle}
+	description={pageDescription}
 	lang={lang}
 >
 	<div class="flex w-full rounded-(--radius-large) overflow-hidden relative mb-4">
@@ -104,6 +109,9 @@ const gridClass = ["grid-cols-1", "grid-cols-2", "grid-cols-3"][
 								src={cdnImage(src)}
 								alt={`${i18n(I18nKey.momentsImage, lang)} ${index + 1}`}
 								loading="lazy"
+								decoding="async"
+								data-img-placeholder
+								data-img-state="pending"
 								class="w-full h-full object-cover transition duration-300 group-hover:scale-105"
 							/>
 						</a>
