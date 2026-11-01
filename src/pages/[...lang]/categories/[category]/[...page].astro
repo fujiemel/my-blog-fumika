@@ -1,0 +1,56 @@
+---
+import Pagination from "@components/control/Pagination.astro";
+import PostPage from "@components/PostPage.astro";
+import { DEFAULT_LANG, PAGE_SIZE, SUPPORTED_LANG } from "@constants/constants";
+import I18nKey from "@i18n/i18nKey";
+import { i18n } from "@i18n/translation";
+import MainGridLayout from "@layouts/MainGridLayout.astro";
+import { getCategoryList, getSortedPosts } from "@utils/content-utils";
+import type { GetStaticPaths } from "astro";
+
+export const getStaticPaths = (async ({ paginate }) => {
+	const paths = [];
+	const uncategorized = i18n(I18nKey.uncategorized, DEFAULT_LANG);
+
+	for (const lang of SUPPORTED_LANG) {
+		const posts = await getSortedPosts(lang);
+		const categories = await getCategoryList(lang);
+		const langParam = lang === DEFAULT_LANG ? undefined : lang;
+
+		for (const category of categories) {
+			// 未分类走归档页的 uncategorized 过滤，不单独建页
+			if (category.name.trim() === uncategorized) continue;
+
+			const categoryPosts = posts.filter(
+				(post) => (post.data.category ?? "").trim() === category.name.trim(),
+			);
+
+			paths.push(
+				...paginate(categoryPosts, {
+					params: { lang: langParam, category: category.name },
+					pageSize: PAGE_SIZE,
+					props: { lang, category: category.name },
+				}),
+			);
+		}
+	}
+
+	return paths;
+}) satisfies GetStaticPaths;
+
+const { page, lang, category } = Astro.props;
+
+const title = `${i18n(I18nKey.categories, lang)}: ${category}`;
+const description = `${title} · ${page.total} ${i18n(I18nKey.postsCount, lang)}`;
+const len = page.data.length;
+---
+
+<MainGridLayout title={title} description={description} lang={lang}>
+	<h1 class="sr-only">{title}</h1>
+	<PostPage page={page} lang={lang}></PostPage>
+	<Pagination
+		class="mx-auto onload-animation"
+		page={page}
+		style={`animation-delay: calc(var(--content-delay) + ${len * 50}ms)`}
+	></Pagination>
+</MainGridLayout>

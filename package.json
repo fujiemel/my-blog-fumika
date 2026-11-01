@@ -4,8 +4,8 @@
 	"version": "0.1.0",
 	"scripts": {
 		"dev": "astro dev",
-		"build": "astro build && pagefind --site dist && node scripts/check-dist.mjs",
-		"release": "node --env-file=.env scripts/sync-images.mjs && astro build && pagefind --site dist && node --env-file=.env scripts/check-dist.mjs",
+		"build": "node scripts/image-sizes.mjs && astro build && pagefind --site dist && node scripts/check-dist.mjs",
+		"release": "node --env-file=.env scripts/sync-images.mjs && node scripts/image-sizes.mjs && astro build && pagefind --site dist && node --env-file=.env scripts/check-dist.mjs",
 		"sync-images": "node --env-file=.env scripts/sync-images.mjs",
 		"pull-images": "node --env-file=.env scripts/pull-images.mjs",
 		"check:dist": "node scripts/check-dist.mjs",
@@ -22,7 +22,9 @@
 		"test": "vitest",
 		"test-coverage": "vitest run --coverage",
 		"preinstall": "npx only-allow pnpm",
-		"local-prepare": "husky"
+		"local-prepare": "husky",
+		"predev": "node scripts/image-sizes.mjs",
+		"images:sizes": "node scripts/image-sizes.mjs"
 	},
 	"dependencies": {
 		"@astrojs/markdown-remark": "^7.3.0",
@@ -34,6 +36,7 @@
 		"@expressive-code/plugin-collapsible-sections": "^0.44.2",
 		"@expressive-code/plugin-line-numbers": "^0.44.2",
 		"@fontsource-variable/jetbrains-mono": "^5.3.0",
+		"@fontsource-variable/noto-sans-sc": "^5.3.1",
 		"@fontsource/roboto": "^5.3.0",
 		"@iconify-json/fa6-brands": "^1.2.6",
 		"@iconify-json/fa6-regular": "^1.2.4",
@@ -77,6 +80,7 @@
 		"@astrojs/ts-plugin": "^1.10.11",
 		"@aws-sdk/client-s3": "^3.1160.0",
 		"@biomejs/biome": "2.5.12",
+		"@lhci/cli": "^0.15.1",
 		"@rollup/plugin-yaml": "^5.0.0",
 		"@types/hast": "^3.0.5",
 		"@types/markdown-it": "^14.2.0",

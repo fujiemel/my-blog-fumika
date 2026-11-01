@@ -40,6 +40,11 @@ export const tr: Translation = {
 	[Key.momentsImage]: "Görsel",
 	[Key.earlierMoment]: "Önceki anlar",
 	[Key.laterMoment]: "Sonraki anlar",
+	[Key.pinned]: "Sabitlenmiş",
+	[Key.relatedPosts]: "İlgili Yazılar",
+	[Key.share]: "Paylaş",
+	[Key.copyLink]: "Bağlantıyı Kopyala",
+	[Key.copied]: "Kopyalandı",
 
 	[Key.notFound]: "Bulunamadı",
 	[Key.returnToHomepage]: "Ana sayfaya dön",

@@ -1,0 +1,55 @@
+---
+import Pagination from "@components/control/Pagination.astro";
+import PostPage from "@components/PostPage.astro";
+import { DEFAULT_LANG, PAGE_SIZE, SUPPORTED_LANG } from "@constants/constants";
+import I18nKey from "@i18n/i18nKey";
+import { i18n } from "@i18n/translation";
+import MainGridLayout from "@layouts/MainGridLayout.astro";
+import { getSortedPosts, getTagList } from "@utils/content-utils";
+import type { GetStaticPaths } from "astro";
+
+export const getStaticPaths = (async ({ paginate }) => {
+	const paths = [];
+
+	for (const lang of SUPPORTED_LANG) {
+		const posts = await getSortedPosts(lang);
+		const tags = await getTagList(lang);
+		const langParam = lang === DEFAULT_LANG ? undefined : lang;
+
+		for (const tag of tags) {
+			const taggedPosts = posts.filter((post) =>
+				(post.data.tags ?? []).some(
+					(postTag: string) => postTag.trim() === tag.name.trim(),
+				),
+			);
+
+			paths.push(
+				...paginate(taggedPosts, {
+					// 参数保持原样，由 Astro 在生成路径时统一编码
+					params: { lang: langParam, tag: tag.name },
+					pageSize: PAGE_SIZE,
+					props: { lang, tag: tag.name },
+				}),
+			);
+		}
+	}
+
+	return paths;
+}) satisfies GetStaticPaths;
+
+const { page, lang, tag } = Astro.props;
+
+const title = `${i18n(I18nKey.tags, lang)}: ${tag}`;
+const description = `${title} · ${page.total} ${i18n(I18nKey.postsCount, lang)}`;
+const len = page.data.length;
+---
+
+<MainGridLayout title={title} description={description} lang={lang}>
+	<h1 class="sr-only">{title}</h1>
+	<PostPage page={page} lang={lang}></PostPage>
+	<Pagination
+		class="mx-auto onload-animation"
+		page={page}
+		style={`animation-delay: calc(var(--content-delay) + ${len * 50}ms)`}
+	></Pagination>
+</MainGridLayout>

@@ -19,6 +19,7 @@ interface Props {
 	image: string;
 	description: string;
 	draft: boolean;
+	pinned?: boolean;
 	style: string;
 	lang?: string;
 }
@@ -32,6 +33,7 @@ const {
 	category,
 	image,
 	description,
+	pinned,
 	style,
 	lang,
 } = Astro.props;
@@ -45,6 +47,12 @@ const { remarkPluginFrontmatter } = await render(entry);
 ---
 <div class:list={["card-base flex flex-col-reverse md:flex-col w-full rounded-(--radius-large) overflow-hidden relative", className]} style={style}>
     <div class:list={["pl-6 md:pl-9 pr-6 md:pr-2 pt-6 md:pt-7 pb-6 relative", {"w-full md:w-[calc(100%-52px-12px)]": !hasCover, "w-full md:w-[calc(100%-var(--coverWidth)-12px)]": hasCover}]}>
+        {pinned && (
+            <div class="mb-2 flex items-center gap-1 w-fit rounded-full bg-(--btn-regular-bg) text-(--primary) text-xs font-medium px-2.5 py-1">
+                <Icon name="material-symbols:push-pin" class="text-[0.875rem]" />
+                {i18n(I18nKey.pinned, lang)}
+            </div>
+        )}
         <a href={url}
            class="transition group w-full block font-bold mb-3 text-3xl text-90
         hover:text-(--primary) dark:hover:text-(--primary)

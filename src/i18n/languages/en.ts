@@ -40,6 +40,11 @@ export const en: Translation = {
 	[Key.momentsImage]: "Image",
 	[Key.earlierMoment]: "Earlier moments",
 	[Key.laterMoment]: "Later moments",
+	[Key.pinned]: "Pinned",
+	[Key.relatedPosts]: "Related Posts",
+	[Key.share]: "Share",
+	[Key.copyLink]: "Copy Link",
+	[Key.copied]: "Copied!",
 
 	[Key.notFound]: "Not Found",
 	[Key.returnToHomepage]: "Return to Homepage",

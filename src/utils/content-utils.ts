@@ -16,6 +16,7 @@ export type EnrichedPost = CollectionEntry<"posts"> & {
 		nextTitle?: string;
 		prevSlug?: string;
 		prevTitle?: string;
+		related?: { id: string; title: string }[];
 	};
 };
 
@@ -109,11 +110,48 @@ async function getResolvedPostsForLang(
 		}
 	}
 
-	return resolvedPosts.sort((a, b) => {
+	const sorted = resolvedPosts.sort((a, b) => {
+		// 置顶文章始终排在最前，其余按发布时间倒序
+		const pinnedDiff = Number(b.data.pinned) - Number(a.data.pinned);
+		if (pinnedDiff !== 0) return pinnedDiff;
+
 		const dateA = new Date(a.data.published).getTime();
 		const dateB = new Date(b.data.published).getTime();
 		return dateB - dateA;
 	});
+
+	// 相关文章：标签重合度（Jaccard）+ 同分类加权，全为 0 时退化为最近文章
+	const relatedLimit = 3;
+	for (const post of sorted) {
+		const tags = new Set(
+			(post.data.tags ?? []).map((tag: string) => tag.trim()),
+		);
+
+		post.data.related = sorted
+			.filter((other) => other.id !== post.id)
+			.map((other) => {
+				const otherTags = new Set(
+					(other.data.tags ?? []).map((tag: string) => tag.trim()),
+				);
+				let intersection = 0;
+				for (const tag of tags) {
+					if (otherTags.has(tag)) intersection++;
+				}
+				const union = tags.size + otherTags.size - intersection;
+				const tagScore = union > 0 ? intersection / union : 0;
+				const categoryScore =
+					post.data.category && other.data.category === post.data.category
+						? 0.25
+						: 0;
+
+				return { other, score: tagScore + categoryScore };
+			})
+			.sort((a, b) => b.score - a.score)
+			.slice(0, relatedLimit)
+			.map(({ other }) => ({ id: other.id, title: other.data.title }));
+	}
+
+	return sorted;
 }
 
 export async function getSortedPosts(lang?: string): Promise<GetSortedPosts[]> {

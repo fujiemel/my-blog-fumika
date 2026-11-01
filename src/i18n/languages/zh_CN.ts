@@ -40,6 +40,11 @@ export const zh_CN: Translation = {
 	[Key.momentsImage]: "图片",
 	[Key.earlierMoment]: "更早的说说",
 	[Key.laterMoment]: "更新的说说",
+	[Key.pinned]: "置顶",
+	[Key.relatedPosts]: "相关阅读",
+	[Key.share]: "分享",
+	[Key.copyLink]: "复制链接",
+	[Key.copied]: "已复制",
 
 	[Key.notFound]: "未找到",
 	[Key.returnToHomepage]: "返回首页",

@@ -21,6 +21,7 @@ import remarkSectionize from "remark-sectionize";
 import { deployConfig, expressiveCodeConfig } from "./src/config.ts";
 import I18nKey from "./src/i18n/i18nKey.ts";
 import { i18n } from "./src/i18n/translation.ts";
+import { imageDimensions } from "./src/integrations/image-dimensions.mjs";
 import { pluginCustomCopyButton } from "./src/plugins/expressive-code/custom-copy-button.js";
 import { pluginLanguageBadge } from "./src/plugins/expressive-code/language-badge.ts";
 import { rehypeCdnImage } from "./src/plugins/rehype-cdn-image.mjs";
@@ -129,6 +130,7 @@ export default defineConfig({
 				forward: ["dataLayer.push"],
 			},
 		}),
+		imageDimensions({ cdnBase: cdnBaseUrl }),
 	],
 	markdown: {
 		processor: unified({

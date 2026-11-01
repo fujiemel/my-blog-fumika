@@ -3,6 +3,7 @@ dist/
 
 # generated types
 .astro/
+src/generated/
 
 # dependencies
 node_modules/
@@ -47,3 +48,6 @@ coverage
 
 # R2 同步记录
 .r2-manifest.json
+
+# Lighthouse CI
+.lighthouseci/

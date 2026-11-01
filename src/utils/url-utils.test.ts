@@ -104,19 +104,19 @@ describe("url-utils", () => {
 		});
 
 		it("should handle encoded tags properly for URLs", () => {
-			expect(getTagUrl("Web Dev")).toBe("/archive/?tag=Web%20Dev");
-			expect(getTagUrl("Rust/C++")).toBe("/archive/?tag=Rust%2FC%2B%2B");
+			expect(getTagUrl("Web Dev")).toBe("/tags/Web%20Dev/");
+			expect(getTagUrl("Rust/C++")).toBe("/tags/Rust%2FC%2B%2B/");
 		});
 
 		it("should handle surrounding whitespace from tags", () => {
-			expect(getTagUrl("  ts  ")).toBe("/archive/?tag=ts");
+			expect(getTagUrl("  ts  ")).toBe("/tags/ts/");
 		});
 
 		describe("custom BASE_URL", () => {
 			it("should handle custom BASE_URL correctly", () => {
 				vi.stubEnv("BASE_URL", "/blog/");
 
-				expect(getTagUrl("js", "zh_TW")).toBe("/blog/zh-TW/archive/?tag=js");
+				expect(getTagUrl("js", "zh_TW")).toBe("/blog/zh-TW/tags/js/");
 			});
 		});
 	});
@@ -136,11 +136,9 @@ describe("url-utils", () => {
 		});
 
 		it("should handle encoded category names properly", () => {
-			expect(getCategoryUrl("Web Dev", "zh_CN")).toBe(
-				"/archive/?category=Web%20Dev",
-			);
+			expect(getCategoryUrl("Web Dev", "zh_CN")).toBe("/categories/Web%20Dev/");
 			expect(getCategoryUrl("Rust/C++", "zh_TW")).toBe(
-				"/zh-TW/archive/?category=Rust%2FC%2B%2B",
+				"/zh-TW/categories/Rust%2FC%2B%2B/",
 			);
 		});
 
@@ -149,7 +147,7 @@ describe("url-utils", () => {
 				vi.stubEnv("BASE_URL", "/blog/");
 
 				expect(getCategoryUrl("astro", "zh_TW")).toBe(
-					"/blog/zh-TW/archive/?category=astro",
+					"/blog/zh-TW/categories/astro/",
 				);
 			});
 		});

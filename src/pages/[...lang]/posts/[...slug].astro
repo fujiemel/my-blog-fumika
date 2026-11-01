@@ -4,6 +4,8 @@ import path from "node:path";
 import Comment from "@components/comment/index.astro";
 import License from "@components/misc/License.astro";
 import Markdown from "@components/misc/Markdown.astro";
+import ReadingProgress from "@components/misc/ReadingProgress.astro";
+import ShareButtons from "@components/misc/ShareButtons.astro";
 import { DEFAULT_LANG, SUPPORTED_LANG } from "@constants/constants";
 import I18nKey from "@i18n/i18nKey";
 import { i18n } from "@i18n/translation";
@@ -49,6 +51,8 @@ export const getStaticPaths = (async () => {
 }) satisfies GetStaticPaths;
 
 const { entry, lang } = Astro.props;
+const related: { id: string; title: string }[] =
+	(entry.data as { related?: { id: string; title: string }[] }).related ?? [];
 const { Content, headings, remarkPluginFrontmatter } = await render(entry);
 
 // 正文没有 description 时用首段摘要，避免所有文章共用站点副标题
@@ -91,6 +95,7 @@ const jsonLd = {
 ---
 
 <MainGridLayout banner={ogImage} title={entry.data.title} description={pageDescription} lang={lang} setOGTypeArticle={true} headings={headings}>
+    <ReadingProgress />
     <script is:inline slot="head" type="application/ld+json" set:html={JSON.stringify(jsonLd)}></script>
     <div class="flex w-full rounded-(--radius-large) overflow-hidden relative mb-4">
         <div id="post-container" class:list={["card-base z-10 px-6 md:px-9 pt-6 pb-4 relative w-full ",
@@ -116,6 +121,12 @@ const jsonLd = {
 
             <!-- title -->
             <div class="relative onload-animation">
+                {entry.data.pinned && (
+                    <div class="mb-2 flex items-center gap-1 w-fit rounded-full bg-(--btn-regular-bg) text-(--primary) text-xs font-medium px-2.5 py-1">
+                        <Icon name="material-symbols:push-pin" class="text-[0.875rem]" />
+                        {i18n(I18nKey.pinned, lang)}
+                    </div>
+                )}
                 <h1
                     data-pagefind-body data-pagefind-weight="10" data-pagefind-meta="title"
                     class="transition w-full block font-bold mb-3
@@ -147,14 +158,36 @@ const jsonLd = {
             }
 
 
+            <!-- 正文标题层级兜底：部分文章直接从 h3 开始 -->
+            <h2 class="sr-only">{i18n(I18nKey.postLabel, lang)}</h2>
+
             <Markdown class="mb-6 markdown-content onload-animation">
                 <Content />
             </Markdown>
 
             {licenseConfig.enable && <License title={entry.data.title} slug={entry.id} pubDate={entry.data.published} updateDate={entry.data.updated} lang={lang} class="mb-6 rounded-xl license-container onload-animation"></License>}
 
+            <ShareButtons title={entry.data.title} lang={lang} />
+
         </div>
     </div>
+
+    {related.length > 0 && (
+        <div class="card-base px-6 md:px-9 py-6 mb-4 onload-animation">
+            <h2 class="font-bold text-xl mb-4 text-90">{i18n(I18nKey.relatedPosts, lang)}</h2>
+            <ul class="flex flex-col gap-2">
+                {related.map((item) => (
+                    <li>
+                        <a href={getPostUrlBySlug(item.id, lang)}
+                           class="transition text-75 hover:text-(--primary) flex items-center gap-1.5">
+                            <Icon name="material-symbols:chevron-right-rounded" class="text-[1.25rem] text-(--primary)" />
+                            <span class="line-clamp-1">{item.title}</span>
+                        </a>
+                    </li>
+                ))}
+            </ul>
+        </div>
+    )}
 
     <Comment lang={lang}></Comment>
 

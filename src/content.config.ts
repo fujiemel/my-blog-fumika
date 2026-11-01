@@ -26,6 +26,7 @@ const postsCollection = defineCollection({
 			// YAML 中留空的字段会解析成 null，而 default() 只对 undefined 生效，
 			// 故用 emptyToDefault 统一兜底，既兼容空值又不污染下游类型
 			draft: emptyToDefault(z.boolean(), false),
+			pinned: emptyToDefault(z.boolean(), false),
 			description: emptyToDefault(z.string(), ""),
 			image: emptyToDefault(z.string(), ""),
 			tags: emptyToDefault(z.array(z.string()), []),

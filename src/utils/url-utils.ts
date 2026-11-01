@@ -32,8 +32,9 @@ export function getMomentUrlBySlug(slug: string, lang?: string): string {
 }
 
 export function getTagUrl(tag: string, lang?: string): string {
-	if (!tag) return url("/archive/", lang);
-	return url(`/archive/?tag=${encodeURIComponent(tag.trim())}`, lang);
+	const trimmed = tag?.trim() ?? "";
+	if (!trimmed) return url("/archive/", lang);
+	return url(`/tags/${encodeURIComponent(trimmed)}/`, lang);
 }
 
 export function getCategoryUrl(category: string | null, lang?: string): string {
@@ -49,7 +50,7 @@ export function getCategoryUrl(category: string | null, lang?: string): string {
 		return url("/archive/?uncategorized=true", lang);
 	}
 
-	return url(`/archive/?category=${encodeURIComponent(category.trim())}`, lang);
+	return url(`/categories/${encodeURIComponent(category.trim())}/`, lang);
 }
 
 export function getDir(path: string): string {

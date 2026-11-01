@@ -38,6 +38,12 @@ enum I18nKey {
 	earlierMoment = "earlierMoment",
 	laterMoment = "laterMoment",
 
+	pinned = "pinned",
+	relatedPosts = "relatedPosts",
+	share = "share",
+	copyLink = "copyLink",
+	copied = "copied",
+
 	notFound = "notFound",
 	returnToHomepage = "returnToHomepage",
 

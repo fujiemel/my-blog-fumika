@@ -164,3 +164,82 @@
 		padding-bottom: 0.3em;
 	}
 }
+
+/* ---------- 中文正文排版微调 ----------
+   思源黑体（Noto Sans SC）在小字号下需要比西文更大的行高与段距，
+   这些规则按元素覆盖 typography 插件的默认值。 */
+.custom-md {
+	font-size: 1rem;
+	line-height: 1.85;
+
+	p {
+		margin-top: 1.05em;
+		margin-bottom: 1.05em;
+		line-height: 1.85;
+	}
+
+	h1,
+	h2,
+	h3,
+	h4,
+	h5,
+	h6 {
+		line-height: 1.4;
+		letter-spacing: -0.005em;
+	}
+
+	h2 {
+		margin-top: 2.2em;
+		margin-bottom: 0.9em;
+	}
+
+	h3 {
+		margin-top: 1.7em;
+		margin-bottom: 0.65em;
+	}
+
+	h4 {
+		margin-top: 1.4em;
+		margin-bottom: 0.5em;
+	}
+
+	ul,
+	ol {
+		line-height: 1.8;
+	}
+
+	li {
+		margin-top: 0.35em;
+		margin-bottom: 0.35em;
+	}
+
+	li > p {
+		margin-top: 0.25em;
+		margin-bottom: 0.25em;
+	}
+
+	blockquote {
+		line-height: 1.8;
+	}
+
+	img {
+		margin-top: 1.25rem;
+		margin-bottom: 1.25rem;
+	}
+
+	hr {
+		margin-top: 2.5rem;
+		margin-bottom: 2.5rem;
+	}
+
+	figcaption {
+		font-size: 0.875rem;
+		line-height: 1.6;
+	}
+}
+
+@media (min-width: 768px) {
+	.custom-md {
+		font-size: 1.0625rem;
+	}
+}

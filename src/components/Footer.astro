@@ -58,9 +58,9 @@ const currentYear = new Date().getFullYear();
 					</div>
 				)}
 
-				{(footerConfig.icp || footerConfig.moeIcp || footerConfig.gongan) && (
+				{(footerConfig.icp?.text || footerConfig.moeIcp?.text || footerConfig.gongan?.text) && (
 					<div class="transition text-50 text-sm text-center flex flex-wrap items-center justify-center gap-x-3 gap-y-1">
-						{footerConfig.icp && (
+						{footerConfig.icp?.text && (
 							<a
 								class="transition link text-(--primary) font-medium"
 								target="_blank"
@@ -70,7 +70,7 @@ const currentYear = new Date().getFullYear();
 								{footerConfig.icp.text}
 							</a>
 						)}
-						{footerConfig.moeIcp && (
+						{footerConfig.moeIcp?.text && (
 							<a
 								class="transition link text-(--primary) font-medium"
 								target="_blank"
@@ -80,7 +80,7 @@ const currentYear = new Date().getFullYear();
 								{footerConfig.moeIcp.text}
 							</a>
 						)}
-						{footerConfig.gongan && (
+						{footerConfig.gongan?.text && (
 							<a
 								class="transition link text-(--primary) font-medium inline-flex items-center gap-1"
 								target="_blank"

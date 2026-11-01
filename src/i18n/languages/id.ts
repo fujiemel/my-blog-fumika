@@ -40,6 +40,11 @@ export const id: Translation = {
 	[Key.momentsImage]: "Gambar",
 	[Key.earlierMoment]: "Momen sebelumnya",
 	[Key.laterMoment]: "Momen berikutnya",
+	[Key.pinned]: "Disematkan",
+	[Key.relatedPosts]: "Artikel Terkait",
+	[Key.share]: "Bagikan",
+	[Key.copyLink]: "Salin Tautan",
+	[Key.copied]: "Tersalin",
 
 	[Key.notFound]: "Tidak Ditemukan",
 	[Key.returnToHomepage]: "Kembali ke Beranda",

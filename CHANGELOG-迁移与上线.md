@@ -742,3 +742,100 @@ export const footerConfig: FooterConfig = {
 | 重复描述 | 仅首页、关于、友链共用站点副标题（提示项） |
 
 
+
+---
+
+## 二十一、2026-11-01 功能迭代：B/D/E/F/G/I/J/O
+
+本轮按约定只做 8 项，其余功能不动。
+
+### B. 图片尺寸（防 CLS）
+
+- 新增 `scripts/image-sizes.mjs`：构建前用 sharp 扫描 `public/image`，生成 `src/generated/image-sizes.json`
+- 新增 `src/integrations/image-dimensions.mjs`：`astro:build:done` 时给最终 HTML 的 `<img>` 补 `width`/`height`，CDN 地址会被还原成 `/image/...` 查表
+- 选择「构建后改 HTML」而不是 rehype 的原因：正文图片会经过 Astro 图片管线，`data-*` 会被丢弃，改最终产物最稳
+- `package.json`：`build` 前置生成尺寸表，新增 `predev` 与 `images:sizes`
+- 本次补全 **148 张**图片的尺寸；Lighthouse CLS **0.002**
+
+### D. 标签页与分类页
+
+- 新增路由：
+  - `src/pages/[...lang]/tags/[tag]/[...page].astro`
+  - `src/pages/[...lang]/categories/[category]/[...page].astro`
+- 支持分页、独立 title/description、进 sitemap
+- `getTagUrl` / `getCategoryUrl` 改指向新路由；未分类仍走 `/archive/?uncategorized=true`
+- 旧查询参数链接（`/archive/?tag=`）保持可用
+- 生成 **10 个标签页 + 4 个分类页**，站点页面数 45 → 59
+- `url-utils.test.ts` 同步更新，26 项测试通过
+
+### E. 搜索快捷键
+
+`Search.svelte` 新增：
+
+- `Ctrl/Cmd + K` 打开并聚焦搜索框
+- `Esc` 关闭面板
+- `↑ / ↓` 在结果间移动并高亮，`Enter` 打开选中结果
+- 修复「聚焦空输入框时面板被立即关闭」的旧行为
+- 面板底部增加快捷键提示
+
+实测（无头 Chromium）：快捷键打开、输入出结果、方向键高亮、回车跳转全部通过。
+
+### F. 相关文章
+
+- `content-utils.ts` 构建期计算：标签 Jaccard 相似度 + 同分类加权 0.25，取前 3
+- 全部为 0 时按最近文章兜底
+- 文章页底部新增「相关阅读」卡片
+
+### G. 置顶文章
+
+- `content.config.ts` 新增 `pinned: boolean`（默认 `false`）
+- 列表排序：置顶优先，其余按时间倒序
+- 文章卡片与文章标题上方显示「置顶」标记
+- 当前没有文章设置 `pinned: true`，功能待内容启用
+
+### I. 阅读进度条与分享
+
+- `ReadingProgress.astro` + `utils/reading-progress.ts`：顶部 3px 进度条，`requestAnimationFrame` 节流，仅文章页渲染
+- `ShareButtons.astro` + `utils/share.ts`：复制链接、系统分享（`navigator.share` 可用时自动显示）、微博、X
+- 复制成功显示「已复制」提示；`http` 环境下回退到 `execCommand`
+- 监听器只在 `Layout` 绑定一次，Swup 切页后重新同步
+
+实测：Ctrl+K 同批测试通过；分享按钮复制到剪贴板内容为文章绝对地址，提示正常显示。
+
+### J. 中文排版与思源黑体
+
+- 新增依赖 `@fontsource-variable/noto-sans-sc`（可变字重，101 个 unicode-range 切片）
+- `--font-sans` 改为 `Roboto → Noto Sans SC Variable → system`，代码块仍用 JetBrains Mono
+- `markdown.css` 增加中文排版：正文行高 1.85、段距 1.05em、h2/h3 间距、列表行高、图片与分割线间距、桌面端字号 1.0625rem
+- 产物中字体共 5.4MB，但浏览器只会按 unicode-range 下载当前页面用到的切片
+
+### O. Lighthouse CI
+
+- 新增 `lighthouserc.json`：`staticDistDir` 模式，跑首页与一篇文章
+- 预算：性能/无障碍/最佳实践 `warn ≥ 0.9`，SEO `error ≥ 0.9`，CLS `error ≤ 0.05`，LCP `warn ≤ 2.5s`
+- `.github/workflows/build.yml` 在 Node 22 的构建任务后执行 `lhci autorun`
+- 新增 devDependency `@lhci/cli`，`.lighthouseci/` 已忽略
+
+### 顺带修复的可访问性问题
+
+Lighthouse 首轮报告暴露了几个真实问题：
+
+| 问题 | 原因 | 修复 |
+| --- | --- | --- |
+| 空链接 | `footerConfig.icp.text` / `gongan.text` 为空时仍渲染 `<a>` | 仅在文本非空时渲染 |
+| 分页空 `href` | 无上一页/下一页时输出 `<a href="">` | 改为 `aria-hidden` 的 `<span>` |
+| 标签/分类可访问名称不匹配 | 计数徽标被计入可见文本 | 徽标加 `aria-hidden` |
+| `a` 内嵌 `button` | `ButtonLink` 结构非法 | 内层改为 `div` |
+| 标题层级跳跃 | 部分文章从 `h3` 开始 | 正文前加 `sr-only` 的 `h2` |
+
+### 验证结果
+
+| 检查项 | 结果 |
+| --- | --- |
+| `pnpm build` | 通过，59 页；check-dist 通过 |
+| `pnpm check` | 0 errors / 0 warnings / 1 hint（历史遗留） |
+| `vitest` | 26 项通过 |
+| Lighthouse（本地无外网） | SEO 1.0、CLS 0.002、无障碍 0.96 / 0.93；性能与 LCP 因本机 DNS 不可用，数值不代表线上 |
+| 功能实测 | Ctrl+K、结果高亮、回车跳转、进度条、复制链接、标签页均通过 |
+
+> 注意：本机外网 DNS 仍不可用，Lighthouse 的性能分数与 LCP 会被 CDN/Waline/Umami 请求超时拖累，需要以 CI（有网络）结果为准。

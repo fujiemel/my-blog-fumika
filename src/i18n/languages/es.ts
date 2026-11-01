@@ -40,6 +40,11 @@ export const es: Translation = {
 	[Key.momentsImage]: "Imagen",
 	[Key.earlierMoment]: "Momentos anteriores",
 	[Key.laterMoment]: "Momentos posteriores",
+	[Key.pinned]: "Fijado",
+	[Key.relatedPosts]: "Artículos relacionados",
+	[Key.share]: "Compartir",
+	[Key.copyLink]: "Copiar enlace",
+	[Key.copied]: "¡Copiado!",
 
 	[Key.notFound]: "No encontrado",
 	[Key.returnToHomepage]: "Volver a la página de inicio",

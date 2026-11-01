@@ -40,6 +40,11 @@ export const ko: Translation = {
 	[Key.momentsImage]: "이미지",
 	[Key.earlierMoment]: "이전 순간",
 	[Key.laterMoment]: "다음 순간",
+	[Key.pinned]: "고정됨",
+	[Key.relatedPosts]: "관련 글",
+	[Key.share]: "공유",
+	[Key.copyLink]: "링크 복사",
+	[Key.copied]: "복사됨",
 
 	[Key.notFound]: "찾을 수 없음",
 	[Key.returnToHomepage]: "홈으로 돌아가기",
