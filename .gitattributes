@@ -1,6 +1,10 @@
 # Auto detect text files and check them out with LF line endings
 * text=auto eol=lf
 
+# Windows scripts require CRLF even though the rest of the repo is LF
+*.bat text eol=crlf
+*.cmd text eol=crlf
+
 # Binary files (never convert line endings)
 *.png binary
 *.jpg binary
