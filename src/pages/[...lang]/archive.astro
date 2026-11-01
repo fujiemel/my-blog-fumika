@@ -26,6 +26,7 @@ const sortedMoments = await getMomentsWithExcerpt();
 ---
 
 <MainGridLayout title={i18n(I18nKey.archive, lang)} lang={lang}>
+    <h1 class="sr-only">{i18n(I18nKey.archive, lang)}</h1>
     <ArchivePanel
         sortedPosts={sortedPostsList}
         sortedMoments={sortedMoments}

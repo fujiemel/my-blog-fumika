@@ -4,9 +4,11 @@
 	"version": "0.1.0",
 	"scripts": {
 		"dev": "astro dev",
-		"build": "astro build && pagefind --site dist",
-		"release": "node --env-file=.env scripts/sync-images.mjs && astro build && pagefind --site dist",
+		"build": "astro build && pagefind --site dist && node scripts/check-dist.mjs",
+		"release": "node --env-file=.env scripts/sync-images.mjs && astro build && pagefind --site dist && node --env-file=.env scripts/check-dist.mjs",
 		"sync-images": "node --env-file=.env scripts/sync-images.mjs",
+		"pull-images": "node --env-file=.env scripts/pull-images.mjs",
+		"check:dist": "node scripts/check-dist.mjs",
 		"preview": "astro preview",
 		"astro": "astro",
 		"check": "pnpm run astro-check && pnpm run type-check && pnpm run svelte-check",

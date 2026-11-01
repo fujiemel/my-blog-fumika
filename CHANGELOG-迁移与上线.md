@@ -652,14 +652,13 @@ export const footerConfig: FooterConfig = {
 
 ---
 
-## 十八、已知遗留（本次未改）
+## 十八、已知遗留（持续更新）
 
 | 项目 | 说明 | 建议 |
 | --- | --- | --- |
-| 3 篇文章正文硬编码 CDN 绝对地址 | `laojunshan`、`luoyang-three-day-trip`、`blog-attacked` 直接写 `https://blog-images.395718.xyz/...`，绕过了「本地路径 → CDN」映射，换域名/离线预览都会失效 | 统一改成 `/image/posts/...`，并把图片同步回本地 |
-| 本地图与 R2 双份 | `public/image` 会被整目录复制进 `dist`（约 6.9MB），即使线上走 CDN | 若在意产物体积，可在构建后清理 `dist/image/posts|moments` |
-| 远程图片无 `width`/`height` | Astro 的 `inferSize` 需要构建机能访问 CDN，本机 DNS 异常时会退化为普通 `<img>` | 保证构建环境可访问 CDN，或为图片补尺寸 |
-| 首页没有 `<h1>` | 首屏只有 banner 与文章卡片 | 可加一个 `sr-only` 的站点标题 |
+| 本地图与 R2 双份 | `public/image` 约 15MB，会整目录复制进 `dist`；线上正文图实际走 CDN | 若在意产物体积，可在构建后清理 `dist/image/posts|moments`（需保证正文都已改为相对路径，现已满足） |
+| 远程图片无 `width`/`height` | Astro 的 `inferSize` 需要构建机能访问 CDN，离线时会退化为普通 `<img>` | 构建环境保持可访问 CDN，或为图片补尺寸 |
+| alt 文本是自动生成的 | 目前按图片前文语境截取 28 字生成，能通过无障碍/SEO 检查，但不够贴合画面 | 有空时按「这张图拍的是什么」逐张润色 |
 | 无浏览器端自动化测试 | 占位逻辑目前只做了无头 Chromium 手工验证 | 如长期维护可加 Playwright |
 | `ZodTypeAny` 弃用提示 | `astro check` 的唯一 1 条 hint，来自 `content.config.ts` | 跟随 Zod 升级调整类型 |
 
@@ -678,4 +677,68 @@ export const footerConfig: FooterConfig = {
 | 说说 | 分页标题带页码，同日说说标题带摘要，标题/描述无重复 |
 | 图片 | 无头 Chromium 验证：外网不可达时 23 张图进入占位态，本地 4 张正常淡入 |
 | 内部链接 | 全站扫描 0 条死链；本地图片引用 0 条缺失 |
+
+---
+
+## 二十、2026-11-01 追加：图片路径统一、离线预览与工程化
+
+### 1. 正文图片全部改为 `/image/...` 相对路径
+
+- 新增 `scripts/pull-images.mjs`：反向同步 R2 → 本地，扫描 `src/content` 里硬编码的 CDN 地址，下载到 `public/image` 并改写正文
+- 本次下载 40 张（约 8MB），改写 40 处引用；`laojunshan`、`luoyang-three-day-trip`、`blog-attacked` 不再写死域名
+- 新增 `pnpm pull-images`，支持 `--dry-run` / `--force`，可重复执行
+
+### 2. 开发模式改用本地图片
+
+**原因：** `rehypeCdnImage` 之前不看运行模式，`pnpm dev` 也把正文图指向 CDN，断网或 DNS 异常时本地预览全裂。
+
+**处理：** `astro.config.mjs` 仅在 `NODE_ENV === "production"` 时启用 CDN 映射。
+
+| 命令 | 图片地址 |
+| --- | --- |
+| `pnpm dev` | `/image/posts/...`（本地） |
+| `pnpm build` | `https://blog-images.395718.xyz/posts/...`（CDN） |
+
+### 3. 图片 alt 补全
+
+- 45 处空 alt 按「图片前文最近一段文字」自动生成，截断到 28 字
+- 构建产物 270 张图片：缺 `alt` 属性 0，空 `alt` 0
+- 自动文案偏「上下文描述」，够用但不精确，建议后续逐张润色
+
+### 4. 每页恰好一个 `<h1>`
+
+- 文章标题由 `div` 改为 `h1`（样式类不变）
+- 首页、归档页、说说列表、说说明细补 `sr-only` 标题
+- 全站 45 页 h1 数量均为 1（此前 42 页缺失）
+
+### 5. 工程化
+
+| 项目 | 说明 |
+| --- | --- |
+| `.env.example` | 新增；`.gitignore` 增加 `!.env.example`，方便换机器重建配置 |
+| husky | 执行 `pnpm local-prepare` 启用，`.husky/_` 生成并加入 `.gitignore`，pre-commit（lint-staged）与 pre-push（`pnpm check`）真正生效 |
+| `scripts/check-dist.mjs` | 新增构建产物检查，接入 `pnpm build` / `pnpm release`，也可单独 `pnpm check:dist` |
+
+检查项与处置：
+
+| 检查 | 级别 |
+| --- | --- |
+| 站内链接、`_astro` 静态资源是否存在 | 失败（退出码 1） |
+| 正文引用的 `/image/...` 是否存在 | 失败 |
+| 正文是否硬编码 CDN 地址 | 失败 |
+| 重复 `<title>` / description | 提示 |
+| 图片缺少 `alt` 属性 | 提示 |
+
+### 6. 追加验证结果
+
+| 检查项 | 结果 |
+| --- | --- |
+| `pnpm build` | 通过，45 页；`check-dist` 通过 |
+| `pnpm check` | 0 errors / 0 warnings / 1 hint |
+| `vitest` | 26 项全部通过 |
+| 开发模式 | 页面输出 `/image/posts/...`，断网可正常预览 |
+| 生产构建 | 图片仍为 CDN 绝对地址 |
+| h1 / alt | 45 页 h1 均为 1；270 张图片无空 alt |
+| 重复描述 | 仅首页、关于、友链共用站点副标题（提示项） |
+
 

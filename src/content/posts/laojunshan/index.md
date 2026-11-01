@@ -24,38 +24,38 @@ draft: false
 #### 检票
 检票口就是上头那张图片，你要是开车可以进去，里头停车场挺多的，徒步的话，检票口有观光车，15一人，给你送到缆车入口，要是徒步登山就不用做，徒步登山口和缆车不是一个地，从门口到徒步入口大约5公里(记不太清了)，大太阳，闷头走，沿途有个小庙。
 
-![](https://blog-images.395718.xyz/posts/laojunshan/001.webp)
+![检票口就是上头那张图片，你要是开车可以进去](/image/posts/laojunshan/001.webp)
 
 风景还是有的，青山溪水，继续往前走到一个岔路口，左边是缆车入口，直走是徒步的。
 中间被太阳晒的不行，找个铺子买了个帽子(38真黑)
 
-![](https://blog-images.395718.xyz/posts/laojunshan/002.webp)
+![中间被太阳晒的不行，找个铺子买了个帽子(38真黑)](/image/posts/laojunshan/002.webp)
 
 到登山口了
 
-![](https://blog-images.395718.xyz/posts/laojunshan/003.webp)
+![到登山口了](/image/posts/laojunshan/003.webp)
 
 ### 登山
 老君山的徒步，不想吐槽，四分之三都是盘山公路，中天门往上才是楼梯，这大马路走着太膈应了
 在这里还遇上了两个体育生，当了半路搭子，由于我太社恐了，交集不是很多，基本上都是他俩在说话
 开始爬山，两边的路有护栏，上头写满了，来此地旅游的人的痕迹，都是字，我也写一个
 
-![](https://blog-images.395718.xyz/posts/laojunshan/004.webp)
+![开始爬山，两边的路有护栏，上头写满了，来此地旅游的人的痕](/image/posts/laojunshan/004.webp)
 
 沿途有许多补给点，物价越往上越贵，话说公路有车能送货，价格比泰山还贵一点感觉
 老君山的风景是真不错，阳光，微风(词穷了)，看照片吧
 
-![](https://blog-images.395718.xyz/posts/laojunshan/005.webp)
+![老君山的风景是真不错，阳光，微风(词穷了)，看照片吧](/image/posts/laojunshan/005.webp)
 
-![](https://blog-images.395718.xyz/posts/laojunshan/006.webp)
+![老君山的风景是真不错，阳光，微风(词穷了)，看照片吧](/image/posts/laojunshan/006.webp)
 
-![](https://blog-images.395718.xyz/posts/laojunshan/007.webp)
+![老君山的风景是真不错，阳光，微风(词穷了)，看照片吧](/image/posts/laojunshan/007.webp)
 
-![](https://blog-images.395718.xyz/posts/laojunshan/008.webp)
+![老君山的风景是真不错，阳光，微风(词穷了)，看照片吧](/image/posts/laojunshan/008.webp)
 
-![](https://blog-images.395718.xyz/posts/laojunshan/009.webp)
+![老君山的风景是真不错，阳光，微风(词穷了)，看照片吧](/image/posts/laojunshan/009.webp)
 
-![](https://blog-images.395718.xyz/posts/laojunshan/010.webp)
+![老君山的风景是真不错，阳光，微风(词穷了)，看照片吧](/image/posts/laojunshan/010.webp)
 
 路途中间有些近路，有标牌，更明显这块有条近路，路确实近了，就是爬坡玩，猛的爬楼梯，真酸爽，有些路不一定是近路(滑稽)
 他俩不愧是体育生，身体素质就是好，都是我在最后，就这么一路吭哧吭哧的爬，好累呀(身体上的)
@@ -63,19 +63,19 @@ draft: false
 ### 中天门
 从徒步入口到中天门大约4.5个小时，从中天门到金顶大概1个小时多点(我是59分钟就到了)
 
-![](https://blog-images.395718.xyz/posts/laojunshan/011.webp)
+![从徒步入口到中天门大约4.5个小时，从中天门到金顶大概1](/image/posts/laojunshan/011.webp)
 
-![](https://blog-images.395718.xyz/posts/laojunshan/012.webp)
+![从徒步入口到中天门大约4.5个小时，从中天门到金顶大概1](/image/posts/laojunshan/012.webp)
 
 许愿树
 
-![](https://blog-images.395718.xyz/posts/laojunshan/013.webp)
+![许愿树](/image/posts/laojunshan/013.webp)
 
 中天门往后就都是楼梯了
 也开始起雾了
 #### 仙境隧道
 
-![](https://blog-images.395718.xyz/posts/laojunshan/014.webp)
+![仙境隧道](/image/posts/laojunshan/014.webp)
 
 穿过这隧道，豁然开朗，狂风扑面，得劲
 过去就是十里画屏，据说风景是最美的一部分，但是仙境吗，雾大一点，没毛病，就是啥也看不到了，太可惜了
@@ -84,31 +84,31 @@ draft: false
 一路着急忙慌，还差点没赶上日落
 ### 金顶道观群
 
-![](https://blog-images.395718.xyz/posts/laojunshan/016.webp)
+![金顶道观群](/image/posts/laojunshan/016.webp)
 
 蜜雪冰城真的无处不在
 
-![](https://blog-images.395718.xyz/posts/laojunshan/017.webp)
+![蜜雪冰城真的无处不在](/image/posts/laojunshan/017.webp)
 
-![](https://blog-images.395718.xyz/posts/laojunshan/018.webp)
+![蜜雪冰城真的无处不在](/image/posts/laojunshan/018.webp)
 
 ### 日落
 泰山日出云海没看上，老君山日落云海总算看上了
 
-![](https://blog-images.395718.xyz/posts/laojunshan/019.webp)
+![泰山日出云海没看上，老君山日落云海总算看上了](/image/posts/laojunshan/019.webp)
 
-![](https://blog-images.395718.xyz/posts/laojunshan/020.webp)
+![泰山日出云海没看上，老君山日落云海总算看上了](/image/posts/laojunshan/020.webp)
 
 原本应该是动图，技术浅薄弄不出来
 ### 回洛阳
 乘坐金顶索道回到中天门上方不远处的平台，这里有个挺出名的老君山滑梯，20￥滑一段，挺短人又多，没网上说的从山顶滑倒山下，就没坐，天已经要黑了，不知是心疼那70块中天门到山底缆车钱，还是想全程徒步，说出去好听些。心存侥幸，以为老君山那么大个地方，那么多人夜爬，会没有回去的车吗，脑子一热，徒步走下去
 
-![](https://blog-images.395718.xyz/posts/laojunshan/021.webp)
+![乘坐金顶索道回到中天门上方不远处的平台](/image/posts/laojunshan/021.webp)
 
 都说上山容易下山难，确实难啊，刹不住车，磨脚，还黑，不是所有路段都有路灯的，我就应该使劲扇自己两耳光
 到徒步入口已经11点多了，门口全是等待夜爬开始时间的人
 
-![](https://blog-images.395718.xyz/posts/laojunshan/022.webp)
+![到徒步入口已经11点多了，门口全是等待夜爬开始时间的人](/image/posts/laojunshan/022.webp)
 
 往地址广场开始走，走了一小半，有个人开车问我走不走，就上车了，花费15￥给我送到地址广场
 已经差不多12点了，我亲眼看着最后一班车开走了，还有不少客车往徒步入口开去，它能不回去吗，还真不回去(🤪)，没车了怎么办，好像回不去了。民宿80，对于我这种穷游的人来说，到不是住不起，而是感觉还有6个小时，早上第一班车就来了，不太值当(就是穷)。
@@ -119,7 +119,7 @@ draft: false
 #### 小插曲
 高速上我睡得迷迷糊糊，轰隆一声，吓醒了，车爆胎了(😄)，有点倒霉。
 
-![](https://blog-images.395718.xyz/posts/laojunshan/023.webp)
+![高速上我睡得迷迷糊糊，轰隆一声，吓醒了，车爆胎了(😄)](/image/posts/laojunshan/023.webp)
 
 最后也是换上了备胎，继续启程到洛阳火车站，回青旅睡大觉，明天还要继续逛洛阳 。
 ### 总结
@@ -129,4 +129,4 @@ draft: false
 
 ---
 
-![文章封面图](https://blog-images.395718.xyz/posts/laojunshan/024.webp)
+![文章封面图](/image/posts/laojunshan/024.webp)

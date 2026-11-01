@@ -12,7 +12,7 @@ draft: false
 很长时间没有更新了，就是懒的
 更一章
 
-![](/image/posts/vocational-exam-skills/2026-0328-Essay01.webp)
+![更一章](/image/posts/vocational-exam-skills/2026-0328-Essay01.webp)
 
 ### 职教高考（技能）
 
@@ -26,7 +26,7 @@ draft: false
 预测能考200分以上，当然最后的时候忙着猜c语言了，没检查，所以有一点的慌，应该问题不大
 注：连上了两周
 
-![](/image/posts/vocational-exam-skills/2026-0328-Essay02.webp)
+![注：连上了两周](/image/posts/vocational-exam-skills/2026-0328-Essay02.webp)
 
 ### 飞牛
 
@@ -43,7 +43,7 @@ draft: false
 老板那有一箱子线，说不值钱，送了我一根，就是不知道sata几的，也够用了
 着急忙慌回家装机，然后烟灰被发现了
 
-![](/image/posts/vocational-exam-skills/2026-0328-Essay03.webp)
+![着急忙慌回家装机，然后烟灰被发现了](/image/posts/vocational-exam-skills/2026-0328-Essay03.webp)
 
 ### 抽烟
 

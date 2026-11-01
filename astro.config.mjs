@@ -46,7 +46,9 @@ function readCdnBase() {
 	}
 }
 
-const cdnBaseUrl = readCdnBase();
+// 开发模式强制使用本地图片，避免离线/内网时正文图全挂；
+// 生产构建才映射到 CDN。（Astro 在 dev 时会把 NODE_ENV 设为 development）
+const cdnBaseUrl = process.env.NODE_ENV === "development" ? "" : readCdnBase();
 
 export default defineConfig({
 	site: deployConfig.siteUrl,
