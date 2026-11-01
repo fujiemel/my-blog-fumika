@@ -73,37 +73,37 @@ draft: false
 
 下公交车后还需要走500米左右才能到白马寺正门口，白马寺我是挺推荐来玩的，全票35￥，半价17.5￥，逛的地方也多。 要是条件允许还是建议报个团听人家讲解，自己看其实没啥感觉，那种历史的沧桑感
 
-![下公交车后还需要走500米左右才能到白马寺正门口，白马寺](/image/posts/luoyang-three-day-trip/luoyang-20250826_095643408.webp)
+![下公交车后还需要走500米左右才能到白马寺正门口，白马寺](/image/posts/luoyang-three-day-trip/012.webp)
 
 进门后就是一个大香炉
 
-![进门后就是一个大香炉](/image/posts/luoyang-three-day-trip/luoyang-20250826_095802921.webp)
+![进门后就是一个大香炉](/image/posts/luoyang-three-day-trip/013.webp)
 
 右手边就是钟楼，可以免费拿三根香
 
-![右手边就是钟楼，可以免费拿三根香](/image/posts/luoyang-three-day-trip/luoyang-20250826_095842293.webp)
+![右手边就是钟楼，可以免费拿三根香](/image/posts/luoyang-three-day-trip/014.webp)
 
 往后走就是一大片菜地，能听到鸟叫声此起彼伏，还挺好听
 
-![往后走就是一大片菜地，能听到鸟叫声此起彼伏，还挺好听](/image/posts/luoyang-three-day-trip/luoyang-20250826_101132747.webp)
+![往后走就是一大片菜地，能听到鸟叫声此起彼伏，还挺好听](/image/posts/luoyang-three-day-trip/015.webp)
 
 左手边有卖祈福手串的，十八籽68￥还是88￥来着记不清了，我是穷逼，买不起 往里走有个小“屋子”就那洞口，里头就一些画。 不远处有个挺有名的地方“止语茶社” 就是不让讲话，一个喝茶休息的地方
 
-![左手边有卖祈福手串的，十八籽68￥还是88￥来着记不清了](/image/posts/luoyang-three-day-trip/luoyang_20250826_104332585.webp)
+![左手边有卖祈福手串的，十八籽68￥还是88￥来着记不清了](/image/posts/luoyang-three-day-trip/016.webp)
 
 喝完茶，往右走是&nbsp;**国际佛殿区（中印缅泰四国馆）**
 
-![喝完茶，往右走是&nbsp;国际佛殿区（中印缅泰四国馆）](/image/posts/luoyang-three-day-trip/luoyang-20250826_105345391.webp)
+![喝完茶，往右走是&nbsp;国际佛殿区（中印缅泰四国馆）](/image/posts/luoyang-three-day-trip/017.webp)
 
-![喝完茶，往右走是&nbsp;国际佛殿区（中印缅泰四国馆）](/image/posts/luoyang-three-day-trip/luoyang-20250826_110121210.webp)
+![喝完茶，往右走是&nbsp;国际佛殿区（中印缅泰四国馆）](/image/posts/luoyang-three-day-trip/018.webp)
 
-![喝完茶，往右走是&nbsp;国际佛殿区（中印缅泰四国馆）](/image/posts/luoyang-three-day-trip/luoyang-20250826_110923748.webp)
+![喝完茶，往右走是&nbsp;国际佛殿区（中印缅泰四国馆）](/image/posts/luoyang-three-day-trip/019.webp)
 
 都还可以，从屋子上的裂痕可以看出，有点年代
 
 还在白马寺看到雨姐48码大脚了(如有冒犯请与我联系删除)
 
-![还在白马寺看到雨姐48码大脚了(如有冒犯请与我联系删除)](/image/posts/luoyang-three-day-trip/luoyang-20250826_110335412.webp)
+![还在白马寺看到雨姐48码大脚了(如有冒犯请与我联系删除)](/image/posts/luoyang-three-day-trip/020.webp)
 
 文笔有限，**齊云塔院（释迦舍利塔）** **狄仁杰墓（唐代名相长眠地）** 不描述了。 ~~没空这里可以不看，有点无聊~~
 
@@ -111,13 +111,13 @@ draft: false
 
 原本是想去洛阳博物馆的，奈何没预约上 乘坐专程公交车前往，下车离门口好远，两边都有小吃摊贩，可以顺手吃个午饭
 
-![原本是想去洛阳博物馆的，奈何没预约上 乘坐专程公交车前往](/image/posts/luoyang-three-day-trip/luoyang-20250826_145223187.webp)
+![原本是想去洛阳博物馆的，奈何没预约上 乘坐专程公交车前往](/image/posts/luoyang-three-day-trip/021.webp)
 
 博物馆的景点都在地下，要钻地道，有点阴冷
 
-![博物馆的景点都在地下，要钻地道，有点阴冷](/image/posts/luoyang-three-day-trip/012.webp)
+![博物馆的景点都在地下，要钻地道，有点阴冷](/image/posts/luoyang-three-day-trip/022.webp)
 
-![博物馆的景点都在地下，要钻地道，有点阴冷](/image/posts/luoyang-three-day-trip/013.webp)
+![博物馆的景点都在地下，要钻地道，有点阴冷](/image/posts/luoyang-three-day-trip/023.webp)
 
 没啥好说的历史悠久，没报团，看过了就看过了，我也讲不出个花了 这里网上出名一点的就是手中无剑，影子里有剑，其实就是错位 回去补觉
 
@@ -125,11 +125,11 @@ draft: false
 
 乘坐地铁前往，其实公交车更方便，主要是还没坐过洛阳的地铁，体验一下。 龙门石窟只有在天将黑未黑时才是最美的，建议下午去，天亮的时候可以看清佛像，黑的时候开灯真壮观。 中间大佛，只有在现场看到才震撼，爬上楼梯，抬头仰望的时候门票90￥它就已经值了，虽然我是半票40￥(😄)
 
-![乘坐地铁前往，其实公交车更方便，主要是还没坐过洛阳的地铁](/image/posts/luoyang-three-day-trip/014.webp)
+![乘坐地铁前往，其实公交车更方便，主要是还没坐过洛阳的地铁](/image/posts/luoyang-three-day-trip/024.webp)
 
-![乘坐地铁前往，其实公交车更方便，主要是还没坐过洛阳的地铁](/image/posts/luoyang-three-day-trip/015.webp)
+![乘坐地铁前往，其实公交车更方便，主要是还没坐过洛阳的地铁](/image/posts/luoyang-three-day-trip/025.webp)
 
-![乘坐地铁前往，其实公交车更方便，主要是还没坐过洛阳的地铁](/image/posts/luoyang-three-day-trip/016.webp)
+![乘坐地铁前往，其实公交车更方便，主要是还没坐过洛阳的地铁](/image/posts/luoyang-three-day-trip/026.webp)
 
 路线：景区入口 → 西山石窟→ 过漫水桥 → 东山石窟→ 香山寺→ 白园 就是从龙门进直走，中途就是大佛，走到头左拐有个桥过去，再直走就出去了 差评：门口商业太发达，要走好久才进景点，出去也是，风景没得说，妙中妙，必看 一天就结束了，累呀，晚饭回青旅点外卖，实在不知道吃啥好了，我对吃的从来都是能吃就行
 
@@ -139,7 +139,7 @@ draft: false
 
 全天老君山，这得单独写一篇，东西较多。
 
-![全天老君山，这得单独写一篇，东西较多](/image/posts/luoyang-three-day-trip/luoyang-20250827_142149153.webp)
+![全天老君山，这得单独写一篇，东西较多](/image/posts/luoyang-three-day-trip/027.webp)
 
 ## 第三天
 
@@ -149,13 +149,13 @@ draft: false
 
 晚上预约了洛阳博物馆，清晨乘坐地铁前往(坐公交更好，地铁得走挺远)
 
-![晚上预约了洛阳博物馆，清晨乘坐地铁前往(坐公交更好，地铁](/image/posts/luoyang-three-day-trip/luoyang-20250828_104537120.webp)
+![晚上预约了洛阳博物馆，清晨乘坐地铁前往(坐公交更好，地铁](/image/posts/luoyang-three-day-trip/028.webp)
 
 洛阳博物馆分为两层，一楼通展，二楼精品展，作为十三朝古都，东西确实多。
 
-![洛阳博物馆分为两层，一楼通展，二楼精品展，作为十三朝古都](/image/posts/luoyang-three-day-trip/luoyang-20250828_105712150.webp)
+![洛阳博物馆分为两层，一楼通展，二楼精品展，作为十三朝古都](/image/posts/luoyang-three-day-trip/029.webp)
 
-![洛阳博物馆分为两层，一楼通展，二楼精品展，作为十三朝古都](/image/posts/luoyang-three-day-trip/luoyang-20250828_113501938.webp)
+![洛阳博物馆分为两层，一楼通展，二楼精品展，作为十三朝古都](/image/posts/luoyang-three-day-trip/030.webp)
 
 没钱报团，走马观花似的一路看完，有洛阳变迁史，夏代，战国，北魏，唐三彩等，认识的就这么多，好像还有和敦煌莫高窟联合展还是啥的，要钱，没看 有空可以来看看，免费。
 
@@ -167,25 +167,25 @@ draft: false
 
 下午程地铁前往洛邑古城
 
-![下午程地铁前往洛邑古城](/image/posts/luoyang-three-day-trip/luoyang-20250828_180533088.webp)
+![下午程地铁前往洛邑古城](/image/posts/luoyang-three-day-trip/031.webp)
 
-![下午程地铁前往洛邑古城](/image/posts/luoyang-three-day-trip/luoyang-20250828_181317410.webp)
+![下午程地铁前往洛邑古城](/image/posts/luoyang-three-day-trip/032.webp)
 
 没啥好说的，也是吃饭地方，风景还行，由于火车时间，没待太久，什么时间来着好像有天女散花。 有个电音啥的节目，20块挺长时间，应该挺有趣的，时间没规划好，没看。
 
-![没啥好说的，也是吃饭地方，风景还行，由于火车时间，没待太](/image/posts/luoyang-three-day-trip/luoyang-20250828_182951536.webp)
+![没啥好说的，也是吃饭地方，风景还行，由于火车时间，没待太](/image/posts/luoyang-three-day-trip/033.webp)
 
-![没啥好说的，也是吃饭地方，风景还行，由于火车时间，没待太](/image/posts/luoyang-three-day-trip/luoyang-20250828_183029748.webp)
+![没啥好说的，也是吃饭地方，风景还行，由于火车时间，没待太](/image/posts/luoyang-three-day-trip/034.webp)
 
 ### 丽景门
 
 就是一个门进去是个长长的小吃街
 
-![就是一个门进去是个长长的小吃街](/image/posts/luoyang-three-day-trip/luoyang-20250828_192246013.NIGHT.webp)
+![就是一个门进去是个长长的小吃街](/image/posts/luoyang-three-day-trip/035.webp)
 
 这没啥风景 坐公交回去赶火车
 
-![这没啥风景 坐公交回去赶火车](/image/posts/luoyang-three-day-trip/luoyang-20250828_193946285.NIGHT.webp)
+![这没啥风景 坐公交回去赶火车](/image/posts/luoyang-three-day-trip/036.webp)
 
 ## 总结
 
@@ -193,10 +193,10 @@ draft: false
 
 #### 附上一张本人照片
 
-![附上一张本人照片](/image/posts/luoyang-three-day-trip/luoyang-me-2025-11-16_10-10-08.webp)
+![附上一张本人照片](/image/posts/luoyang-three-day-trip/037.webp)
 
 洛阳三天三夜正式结束，敬自己，敬自由
 
 ---
 
-![洛阳三天三夜正式结束，敬自己，敬自由](/image/posts/luoyang-three-day-trip/luoyang-20250826_190952279.webp)
+![洛阳三天三夜正式结束，敬自己，敬自由](/image/posts/luoyang-three-day-trip/038.webp)
