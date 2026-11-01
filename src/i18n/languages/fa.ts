@@ -42,9 +42,6 @@ export const fa: Translation = {
 	[Key.laterMoment]: "لحظه‌های بعدی",
 	[Key.pinned]: "سنجاق‌شده",
 	[Key.relatedPosts]: "مطالب مرتبط",
-	[Key.share]: "اشتراک‌گذاری",
-	[Key.copyLink]: "کپی پیوند",
-	[Key.copied]: "کپی شد",
 
 	[Key.notFound]: "یافت نشد",
 	[Key.returnToHomepage]: "بازگشت به صفحه اصلی",

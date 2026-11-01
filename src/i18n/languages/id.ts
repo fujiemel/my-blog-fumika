@@ -42,9 +42,6 @@ export const id: Translation = {
 	[Key.laterMoment]: "Momen berikutnya",
 	[Key.pinned]: "Disematkan",
 	[Key.relatedPosts]: "Artikel Terkait",
-	[Key.share]: "Bagikan",
-	[Key.copyLink]: "Salin Tautan",
-	[Key.copied]: "Tersalin",
 
 	[Key.notFound]: "Tidak Ditemukan",
 	[Key.returnToHomepage]: "Kembali ke Beranda",

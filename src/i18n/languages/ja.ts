@@ -42,9 +42,6 @@ export const ja: Translation = {
 	[Key.laterMoment]: "新しいつぶやき",
 	[Key.pinned]: "ピン留め",
 	[Key.relatedPosts]: "関連記事",
-	[Key.share]: "共有",
-	[Key.copyLink]: "リンクをコピー",
-	[Key.copied]: "コピーしました",
 
 	[Key.notFound]: "見つかりません",
 	[Key.returnToHomepage]: "ホームに戻る",

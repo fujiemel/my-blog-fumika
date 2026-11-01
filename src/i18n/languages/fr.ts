@@ -42,9 +42,6 @@ export const fr: Translation = {
 	[Key.laterMoment]: "Instants suivants",
 	[Key.pinned]: "Épinglé",
 	[Key.relatedPosts]: "Articles similaires",
-	[Key.share]: "Partager",
-	[Key.copyLink]: "Copier le lien",
-	[Key.copied]: "Copié !",
 
 	[Key.notFound]: "Introuvable",
 	[Key.returnToHomepage]: "Retourner à la page d'accueil",

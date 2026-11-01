@@ -839,3 +839,47 @@ Lighthouse 首轮报告暴露了几个真实问题：
 | 功能实测 | Ctrl+K、结果高亮、回车跳转、进度条、复制链接、标签页均通过 |
 
 > 注意：本机外网 DNS 仍不可用，Lighthouse 的性能分数与 LCP 会被 CDN/Waline/Umami 请求超时拖累，需要以 CI（有网络）结果为准。
+
+---
+
+## 二十二、2026-11-01 修正：移除分享、修复进度条、清理洛阳图片遗留
+
+### 1. 移除分享模块
+
+- 删除 `ShareButtons.astro`、`utils/share.ts` 及 `Layout` / 文章页中的引用与初始化
+- 清理 `share`、`copyLink`、`copied` 三个 i18n key（12 种语言文件）
+- 阅读进度条保留
+
+### 2. 修复阅读进度条不可见
+
+**现象：** 文章页顶部看不到进度条，但滚动时 `transform` 数值确实在变化。
+
+**原因：** 进度条渲染在 `#content-wrapper` 内，该元素带 `onload-animation` 的 `transform`（`fill-mode: forwards` 会一直保留），导致内部 `position: fixed` 相对该内容区而不是视口定位。实测进度条被定位到 `top: 259px; left: 344px`，滚动后直接离开可视区域。
+
+**修复：**
+
+- 进度条移到 `Layout.astro` 的 `<body>` 直属层级，避免任何 transform 祖先
+- `utils/reading-progress.ts` 按 `location.pathname` 判断是否文章页：非文章页直接隐藏，Swup 切页后重新判断
+
+**实测：** 文章页 `top: 0; left: 0`，滚动后 `scaleX` 正常增长；首页 `display: none`；从首页 Swup 切到文章页后重新显示。
+
+### 3. 清理洛阳文章的迁移遗留
+
+**现象：** 《洛阳三日游记》正文里有多处看起来像图片的位置显示为一行文本。
+
+**原因：** 迁移前旧主题有 22 张图片没有成功导入，留下了 `Missing image nal/img/...` 的占位文本（文件名还带 `luoayng` 拼写错误）。这些是迁移前就存在的问题，不是本次改动导致的。
+
+**确认：** 列出 R2 全部 70 个对象，没有任何 `nal/img` 或对应时间戳的文件，确认无法恢复原图。
+
+**处理：** 删除全部 22 行占位文本；文章保留 16 张可用图片（001–016）。
+
+### 4. 验证结果
+
+| 检查项 | 结果 |
+| --- | --- |
+| `pnpm build` | 59 页；check-dist 通过 |
+| `pnpm check` | 0 errors / 0 warnings / 1 hint（历史遗留） |
+| `vitest` | 26 项通过 |
+| 正文残留 | `Missing image` 0 处 |
+| 分享 | DOM 中 0 处 |
+| 进度条 | 文章页 `top/left = 0`，首页隐藏，Swup 切页正常 |

@@ -149,6 +149,12 @@ const bannerOffset =
 		  data-overlayscrollbars-initialize
 	>
 		<ConfigCarrier></ConfigCarrier>
+
+		<!-- 阅读进度条：放在 body 直属层级，避免被 transform 影响 fixed 定位 -->
+		<div id="reading-progress" aria-hidden="true" class="fixed top-0 left-0 z-[100] w-full h-[3px] pointer-events-none bg-transparent">
+			<div id="reading-progress-bar" class="h-full w-full origin-left scale-x-0 bg-(--primary) transition-transform duration-75"></div>
+		</div>
+
 		<slot />
 
 		<!-- increase the page height during page transition to prevent the scrolling animation from jumping -->
@@ -204,7 +210,6 @@ import {
 import {getHue, getStoredTheme, setHue, setTheme} from "../utils/setting-utils";
 import {initImagePlaceholders} from "../utils/image-placeholder";
 import {initReadingProgress} from "../utils/reading-progress";
-import {initShareButtons, syncShareButtons} from "../utils/share";
 import {pathsEqual, url} from "../utils/url-utils";
 import {
 	BANNER_HEIGHT,
@@ -378,7 +383,6 @@ function init() {
 	initCustomScrollbar();
 	initImagePlaceholders();
 	initReadingProgress();
-	initShareButtons();
 	showBanner();
 }
 
@@ -452,7 +456,6 @@ const setup = () => {
 		// 兜底：Swup 替换后插入的图片（含评论、图库）也要接管
 		initImagePlaceholders()
 		initReadingProgress()
-		syncShareButtons()
 	});
 	window.swup.hooks.on('visit:end', (_visit: {to: {url: string}}) => {
 		setTimeout(() => {

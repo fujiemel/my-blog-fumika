@@ -1,13 +1,19 @@
 /**
  * 阅读进度条：绑定一次滚动监听，Swup 切页后只需重新计算。
- * 进度条元素由 ReadingProgress.astro 提供，只在文章页渲染。
+ * 进度条元素位于 Layout 的 body 直属层级，只在文章页显示。
  */
 let bound = false;
 let frame = 0;
 
 function update(): void {
+	const container = document.getElementById("reading-progress");
 	const bar = document.getElementById("reading-progress-bar");
-	if (!bar) return;
+	if (!container || !bar) return;
+
+	// 只在水合后的文章页展示；其他页面直接隐藏
+	const isPost = window.location.pathname.includes("/posts/");
+	container.style.display = isPost ? "" : "none";
+	if (!isPost) return;
 
 	const doc = document.documentElement;
 	const max = doc.scrollHeight - window.innerHeight;

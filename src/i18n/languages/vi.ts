@@ -42,9 +42,6 @@ export const vi: Translation = {
 	[Key.laterMoment]: "Khoảnh khắc sau",
 	[Key.pinned]: "Ghim",
 	[Key.relatedPosts]: "Bài viết liên quan",
-	[Key.share]: "Chia sẻ",
-	[Key.copyLink]: "Sao chép liên kết",
-	[Key.copied]: "Đã sao chép",
 
 	[Key.notFound]: "Không tìm thấy",
 	[Key.returnToHomepage]: "Quay lại trang chủ",

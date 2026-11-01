@@ -42,9 +42,6 @@ export const th: Translation = {
 	[Key.laterMoment]: "โมเมนต์ถัดไป",
 	[Key.pinned]: "ปักหมุด",
 	[Key.relatedPosts]: "บทความที่เกี่ยวข้อง",
-	[Key.share]: "แชร์",
-	[Key.copyLink]: "คัดลอกลิงก์",
-	[Key.copied]: "คัดลอกแล้ว",
 
 	[Key.notFound]: "ไม่พบหน้าเว็บ",
 	[Key.returnToHomepage]: "กลับสู่หน้าหลัก",

@@ -40,9 +40,6 @@ enum I18nKey {
 
 	pinned = "pinned",
 	relatedPosts = "relatedPosts",
-	share = "share",
-	copyLink = "copyLink",
-	copied = "copied",
 
 	notFound = "notFound",
 	returnToHomepage = "returnToHomepage",

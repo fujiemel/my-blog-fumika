@@ -42,9 +42,6 @@ export const zh_TW: Translation = {
 	[Key.laterMoment]: "更新的動態",
 	[Key.pinned]: "置頂",
 	[Key.relatedPosts]: "相關閱讀",
-	[Key.share]: "分享",
-	[Key.copyLink]: "複製連結",
-	[Key.copied]: "已複製",
 
 	[Key.notFound]: "找不到",
 	[Key.returnToHomepage]: "返回首頁",
