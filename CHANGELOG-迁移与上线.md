@@ -883,3 +883,33 @@ Lighthouse 首轮报告暴露了几个真实问题：
 | 正文残留 | `Missing image` 0 处 |
 | 分享 | DOM 中 0 处 |
 | 进度条 | 文章页 `top/left = 0`，首页隐藏，Swup 切页正常 |
+
+---
+
+## 二十三、2026-11-01 找回《洛阳三日游记》缺失的 22 张图片
+
+### 来源
+
+旧博客工程与素材盘：
+
+- 旧文章：`next-theme-coline-master/content/posts/luoyang-three-day-trip/index.mdoc`
+- 图片素材：`Desktop/blogimages/img/`
+
+旧文章里同样存在 22 行 `Missing image nal/img/...`，但对应文件都在 `blogimages/img/` 里，按文件名可以一一对应。
+
+### 处理
+
+- 22 张图片统一转为 WebP（最大宽度 1600，质量 82），放入 `public/image/posts/luoyang-three-day-trip/`
+- 保留原文件名与时间戳，修正两处 `luoayng-` 拼写为 `luoyang-`
+- 按旧文章中的原始位置补回 22 处引用，并按上下文自动生成 alt
+- 文章图片从 16 张恢复到 **38 张**，`Missing image` 文本 0 处
+- 图片目录从 15MB 增至约 23MB，`image-sizes` 重新生成（92 张）
+
+### 验证
+
+| 检查项 | 结果 |
+| --- | --- |
+| `pnpm build` | 59 页；check-dist 通过 |
+| 正文图片 | 38 张，滚动到底全部加载成功 |
+| 残留占位 | `Missing image` 0 处 |
+| 重复图片 | 0 组（SHA-256 校验） |
