@@ -515,3 +515,167 @@ export const footerConfig: FooterConfig = {
 | `src/content/data/friends.json` | 当前为本站占位条目，替换为真实友链 |
 
 > `footerConfig.moeIcp` 是娱乐性质的萌 ICP 备案，非正式备案，用作点缀。
+
+---
+
+## 十五、Windows → Linux 迁移后的环境清理（2026-11-01）
+
+从 Windows 整目录复制到 Linux 后，项目里混入了大量与平台绑定的残留。
+
+| 项目 | 现象 | 处理 |
+| --- | --- | --- |
+| `node_modules/` | 812MB，只含 `win32-x64` 原生包（esbuild、sharp、biome、lightningcss、oxide、rolldown 等），`.bin` 全是 `.CMD`/`.ps1` shim | 删除后用 pnpm 重装，改为 Linux 原生二进制 |
+| `dist/`、`.astro/` | Windows 构建产物与开发缓存，`.astro/*.log` 里是旧机器的 PID/路径 | 删除后重新生成 |
+| 文件权限 | 623 个文件全部是 `755`（复制带来的可执行位） | 文件 `644`、目录 `755` |
+| `LICENSE` | CRLF 换行 | 统一为 LF |
+| `.git/config` | `filemode=false`、`ignorecase=true`、`symlinks=false`（Windows 的克隆参数） | 改为 `true` / `false` / `true`，并补齐仓库级 `user.name`/`user.email` |
+| `.gitattributes` | 只有 `* text=auto`，Windows 上仍可能检出 CRLF | 改为 `* text=auto eol=lf`，图片/字体标记 `binary`；`*.bat`/`*.cmd` 固定 `eol=crlf` 以防将来加脚本 |
+| `.gitignore` | 没有 Windows 系统文件规则 | 增加 `Thumbs.db`、`Desktop.ini`、`$RECYCLE.BIN/`、`*.lnk`、`*.stackdump` |
+
+> 本机 `192.168.1.1` 的 DNS 不响应，`pnpm install` 需要临时在命名空间里挂载公共 DNS 才能联网；这一步没有改动系统配置。
+
+---
+
+## 十六、隐藏问题审查与修复
+
+这轮把主题源码、构建产物、RSS、SEO、脚本都过了一遍，确认并修复了 11 个问题，其中 2 个会造成内容缺失。
+
+### 1. 同步脚本一次最多只上传 4 张图（严重，静默丢图）
+
+**现象：** `pnpm release` 新增一批 jpg 图片时，只有前几张会出现在 R2 上，其余无报错地跳过；且同一批图片每次发布都会重新上传。
+
+**原因：** `scripts/sync-images.mjs` 的 worker 里，转换完 webp 后直接 `return`，结束的是**整个 worker 循环**而不是当前任务，并发为 4 时最多处理 4 张转换图。另外 manifest 用原图路径（`001.jpg`）登记，转换后本地只剩 `001.webp`，下次按 `.webp` 查不到指纹，导致重复上传。
+
+**修复：**
+
+- 去掉 `return`，统一走「上传 → 写回 webp → 删原图 → 记录 manifest」流程
+- manifest 改为按**输出文件**（webp）路径登记，并清理原图条目
+- 指纹改为按**实际上传的字节**计算，保证下次运行能命中并跳过
+
+### 2. RSS 订阅链接少了斜杠
+
+**现象：** `<link rel="alternate" type="application/rss+xml" href="https://www.080527.xyzrss.xml">`，阅读器无法订阅。
+
+**原因：** `Layout.astro` 用 `` `${import.meta.env.SITE}rss.xml` `` 拼接，而 `site` 配置末尾没有斜杠。
+
+**修复：** 改用 `siteUrl("rss.xml")` 生成。
+
+### 3. RSS 正文图片是站内相对路径
+
+**现象：** 订阅源里图片地址为 `/image/posts/...`，离开站点后全部裂图。
+
+**原因：** `rss.xml.ts` 用默认 `markdown-it` 渲染正文，没有经过站点的 CDN 映射与绝对化处理。
+
+**修复：** 新增 `absolutizeImageUrls()`，把 `<img src>` 统一转成绝对地址（`/image/posts|moments/` 走 CDN，其余走站点域名），无 description 时用正文首段生成摘要。
+
+### 4. SEO description 的兜底是死代码
+
+**现象：** 所有文章（`description: ""`）的 meta description 都是站点副标题「记录学习与生活」，6 篇文章完全重复。
+
+**原因：** `description = siteConfig.subtitle` 写在解构默认值里，后面的 `if (!description)` 永远不会成立。
+
+**修复：**
+
+- 去掉默认值，改为 `pageData.description → 站点副标题 → 标题` 依次兜底
+- 文章页显式传入「首段摘要」作为描述
+- 统一压成单行并截断到 160 字（此前摘要里的换行会直接进入 `content` 属性）
+
+### 5. 文章页重复渲染两次
+
+`[...slug].astro` 里 `render(entry)` 调用了两次（一次取 `Content`/`headings`，一次取 `remarkPluginFrontmatter`），改为一次解构。
+
+### 6. 时间显示依赖构建机时区
+
+**现象：** 说说时间在 UTC 的 CI 上会比实际早 8 小时，归档的年份分组在跨年边界也会错位。
+
+**原因：** `Intl.DateTimeFormat` 未指定 `timeZone`，`ArchivePanel` 用 `getMonth()`/`getFullYear()` 取本地时区。
+
+**修复：** `date-utils.ts` 新增统一格式化函数（固定 `Asia/Shanghai`）：`formatDateToYYYYMMDD`、`formatMonthDay`、`formatDateTime`、`getSiteYear`，说说明细、卡片、归档、SEO/JSON-LD 全部改用它们。
+
+### 7. 说说分页与同日说说的标题/描述重复
+
+**现象：** `/moments/2/`、`/moments/3/`… 的 `<title>` 和 description 完全相同；同一天的两条说说详情页标题也完全相同。
+
+**修复：** 分页标题加 `· 2/4`，描述带页码与总数；说说明细标题改用「时间 + 摘要」，并同步到 description。
+
+### 8. 文章排序比较器不返回 0
+
+`content-utils.ts` 的 `sort` 只返回 `-1 / 1`，同日期文章顺序不稳定，改为 `dateB - dateA`。
+
+### 9. 上一篇/下一篇丢失语言前缀
+
+文章页的上一篇/下一篇链接调用 `getPostUrlBySlug()` 时没传 `lang`，多语言部署下会跳到默认语言，已补上。
+
+### 10. 目录（TOC）在动画不触发时失效
+
+`TOC.astro` 只靠 `.prose` 的 `animationend` 初始化，系统开启「减少动态效果」或动画被禁用时右侧目录永远不初始化。改为监听动画 + 600ms 兜底，并加 `initialized` 防止重复初始化。
+
+### 11. 开发模式搜索提示写错包管理器
+
+`Search.svelte` 的假结果提示是 `npm build && npm preview`，改为 `pnpm`。
+
+---
+
+## 十七、图片占位与加载失败兜底
+
+站内正文图基本都在 R2，DNS/网络异常时整块空白，且此前没有任何占位或失败提示。这轮补了一套轻量方案。
+
+### 状态机
+
+所有图片统一经历三个状态，通过 `data-img-state` 表达：
+
+| 状态 | 触发 | 表现 |
+| --- | --- | --- |
+| `pending` | 初始标记 / 脚本接管时图片尚未完成 | 底色 + 流光骨架，隐藏 alt 文本 |
+| `loaded` | `load` 事件或 `complete && naturalWidth > 0` | 240ms 淡入，骨架停止 |
+| `error` | `error` 事件 / 已完成但宽度为 0 | 替换为本地内联 SVG 占位图，`object-fit: contain` 保留版面 |
+
+### 涉及文件
+
+- 新增 `src/utils/image-placeholder.ts`：`initImagePlaceholders()` 扫描并接管图片，占位图为内联 data URI，不依赖网络与 base 路径；占位图本身失败时不再递归
+- 新增 `src/styles/image-placeholder.css`：骨架流光、淡入、失败态样式，适配 `prefers-reduced-motion`
+- `Layout.astro`：首屏初始化，并在 Swup 的 `content:replace` / `page:view` 后重新扫描
+- `rehype-lazy-load-image.mjs`：正文图片补 `decoding="async"`、`data-img-placeholder`、`data-img-state`
+- `ImageWrapper.astro`：封面/横幅/头像统一加占位标记；本地图片找不到时直接渲染占位图而不是空白；站内 `/image/posts|moments/` 前缀也走 CDN 映射
+- `MomentCard.astro`、说说明细页：配图同样加占位标记
+
+> 注意：Markdown 图片会经过 Astro 的 `rehype-images` + `updateImageReferencesInBody` 管线，该管线只保留 `class`/`for` 等少数属性，`data-*` 会被丢弃。因此正文图的骨架由客户端脚本补上；服务端能保留属性的场景（横幅、封面、说说配图）则直接输出。
+
+### 实测
+
+用无头 Chromium 打开构建产物，并把外网域名解析指向黑洞：
+
+| 结果 | 数量 |
+| --- | --- |
+| 远程图 → `error` 并替换占位图 | 23 |
+| 本地图 → `loaded` | 4 |
+
+---
+
+## 十八、已知遗留（本次未改）
+
+| 项目 | 说明 | 建议 |
+| --- | --- | --- |
+| 3 篇文章正文硬编码 CDN 绝对地址 | `laojunshan`、`luoyang-three-day-trip`、`blog-attacked` 直接写 `https://blog-images.395718.xyz/...`，绕过了「本地路径 → CDN」映射，换域名/离线预览都会失效 | 统一改成 `/image/posts/...`，并把图片同步回本地 |
+| 本地图与 R2 双份 | `public/image` 会被整目录复制进 `dist`（约 6.9MB），即使线上走 CDN | 若在意产物体积，可在构建后清理 `dist/image/posts|moments` |
+| 远程图片无 `width`/`height` | Astro 的 `inferSize` 需要构建机能访问 CDN，本机 DNS 异常时会退化为普通 `<img>` | 保证构建环境可访问 CDN，或为图片补尺寸 |
+| 首页没有 `<h1>` | 首屏只有 banner 与文章卡片 | 可加一个 `sr-only` 的站点标题 |
+| 无浏览器端自动化测试 | 占位逻辑目前只做了无头 Chromium 手工验证 | 如长期维护可加 Playwright |
+| `ZodTypeAny` 弃用提示 | `astro check` 的唯一 1 条 hint，来自 `content.config.ts` | 跟随 Zod 升级调整类型 |
+
+---
+
+## 十九、本轮验证结果
+
+| 检查项 | 结果 |
+| --- | --- |
+| `pnpm build` | 通过，45 页；Pagefind 索引 38 页 / 2380 词 |
+| `pnpm check` | 0 errors / 0 warnings / 1 hint（`ZodTypeAny` 弃用，历史遗留） |
+| `svelte-check` | 0 errors / 0 warnings |
+| `vitest` | 26 项全部通过 |
+| RSS | `<link rel="alternate">` 为 `https://www.080527.xyz/rss.xml`；正文图片均为 CDN 绝对地址；条目描述不再为空 |
+| SEO | 文章 meta description 取首段摘要并压成单行；6 篇文章描述不再重复 |
+| 说说 | 分页标题带页码，同日说说标题带摘要，标题/描述无重复 |
+| 图片 | 无头 Chromium 验证：外网不可达时 23 张图进入占位态，本地 4 张正常淡入 |
+| 内部链接 | 全站扫描 0 条死链；本地图片引用 0 条缺失 |
+
