@@ -122,7 +122,7 @@ export const footerConfig: FooterConfig = {
 	enable: true,
 	since: "2026-10-30", // 站点上线日期，用于计算已稳定运行时长；留空则不显示
 	icp: {
-		text: "", // 正式 ICP 备案号，从工信部备案系统获取；留空则不显示
+		text: "苏ICP备2026085465号", // 正式 ICP 备案号，从工信部备案系统获取；留空则不显示
 		url: "https://beian.miit.gov.cn/",
 	},
 	moeIcp: {
