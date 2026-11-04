@@ -5,7 +5,7 @@ description:
 tags:
   - 思考
 category: 短篇
-draft: true
+draft: false
 ---
 
 来到了大学一个多月了，也走上了正轨，但是我也越发迷茫  
