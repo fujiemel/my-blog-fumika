@@ -125,13 +125,13 @@ export const footerConfig: FooterConfig = {
 		text: "苏ICP备2026085465号", // 正式 ICP 备案号，从工信部备案系统获取；留空则不显示
 		url: "https://beian.miit.gov.cn/",
 	},
+	gongan: {
+		text: "苏公网安备32132202001596号", // 填公安备案号，如 京公网安备11010502030146号
+		url: "https://beian.mps.gov.cn/#/query/webSearch?code=", // code 后面接备案编号中的数字部分
+	},
 	moeIcp: {
 		text: "萌ICP备20259970号", // 娱乐性质的萌 ICP 备案
 		url: "https://icp.gov.moe/?keyword=20259970",
-	},
-	gongan: {
-		text: "", // 填公安备案号，如 京公网安备11010502030146号
-		url: "https://beian.mps.gov.cn/#/query/webSearch?code=", // code 后面接备案编号中的数字部分
 	},
 	customHtml: "", // 追加到页脚的自定义 HTML，会原样渲染
 };
