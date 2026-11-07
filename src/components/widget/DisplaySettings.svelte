@@ -1,9 +1,12 @@
 <script lang="ts">
+import { DEFAULT_HUE } from "@constants/constants";
 import Icon from "@iconify/svelte";
 import { getHue, setHue } from "@utils/setting-utils";
 
-let initialHue = getHue();
-let hue = $state(initialHue);
+// 重置按钮始终回到站点默认色，而不是上次保存的颜色
+let initialHue = DEFAULT_HUE;
+// 初始值读本地保存的颜色；重置按钮仍然回到默认色
+let hue = $state(getHue());
 
 function resetHue() {
 	hue = initialHue;

@@ -5,10 +5,10 @@ import { defineConfig } from "vitest/config";
 export default defineConfig({
 	resolve: {
 		alias: {
-			"@": path.resolve(__dirname, "./src"),
-			"@utils": path.resolve(__dirname, "./src/utils"),
-			"@i18n": path.resolve(__dirname, "./src/i18n"),
-			"@constants": path.resolve(__dirname, "./src/constants"),
+			"@": path.resolve(import.meta.dirname, "./src"),
+			"@utils": path.resolve(import.meta.dirname, "./src/utils"),
+			"@i18n": path.resolve(import.meta.dirname, "./src/i18n"),
+			"@constants": path.resolve(import.meta.dirname, "./src/constants"),
 		},
 	},
 	test: {

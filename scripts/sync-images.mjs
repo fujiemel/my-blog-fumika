@@ -3,6 +3,7 @@
 // 用法：node --env-file=.env scripts/sync-images.mjs [--dry-run] [--force]
 // 无凭据或网络不可达时只警告，不中断构建。
 import crypto from "node:crypto";
+import { existsSync } from "node:fs";
 import fs from "node:fs/promises";
 import path from "node:path";
 import {
@@ -284,7 +285,13 @@ async function sync() {
 		),
 	);
 
-	if (!DRY) await saveManifest(manifest);
+	// 清理本地已不存在的条目，避免 manifest 长期膨胀
+	if (!DRY) {
+		for (const rel of Object.keys(manifest.files)) {
+			if (!existsSync(path.join(IMAGE_ROOT, rel))) delete manifest.files[rel];
+		}
+		await saveManifest(manifest);
+	}
 
 	const summary = DRY ? "待上传" : "上传";
 	console.log(

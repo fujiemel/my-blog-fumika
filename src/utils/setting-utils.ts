@@ -8,6 +8,12 @@ import { expressiveCodeConfig } from "@/config";
 import type { LIGHT_DARK_MODE } from "@/types/config";
 
 export function getHue(): number {
+	const stored = localStorage.getItem("hue");
+	if (stored !== null) {
+		const parsed = Number.parseInt(stored, 10);
+		if (Number.isFinite(parsed)) return parsed;
+	}
+
 	const fallback = String(DEFAULT_HUE);
 	const configCarrier = document.getElementById("config-carrier");
 	return Number.parseInt(configCarrier?.dataset.hue || fallback, 10);
@@ -19,6 +25,7 @@ export function setHue(hue: number): void {
 		return;
 	}
 	r.style.setProperty("--hue", String(hue));
+	localStorage.setItem("hue", String(hue));
 }
 
 export function applyThemeToDocument(theme: LIGHT_DARK_MODE): void {

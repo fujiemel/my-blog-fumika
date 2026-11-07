@@ -133,10 +133,10 @@ const gridClass = ["grid-cols-1", "grid-cols-2", "grid-cols-3"][
 
 	<div class="flex flex-col md:flex-row justify-between mb-4 gap-4 overflow-hidden w-full">
 		<a
-			href={next ? url(`/moments/${next.id}/`, lang) : "#"}
-			class:list={["w-full font-bold overflow-hidden active:scale-95", { "pointer-events-none": !next }]}
+			href={prev ? url(`/moments/${prev.id}/`, lang) : "#"}
+			class:list={["w-full font-bold overflow-hidden active:scale-95", { "pointer-events-none": !prev }]}
 		>
-			{next && (
+			{prev && (
 				<div class="btn-card rounded-2xl w-full h-[3.75rem] max-w-full px-4 flex items-center justify-start! gap-4">
 					<Icon name="material-symbols:chevron-left-rounded" class="text-[2rem] text-(--primary)" />
 					<div class="overflow-hidden transition text-ellipsis whitespace-nowrap max-w-[calc(100%-3rem)] text-black/75 dark:text-white/75">
@@ -147,10 +147,10 @@ const gridClass = ["grid-cols-1", "grid-cols-2", "grid-cols-3"][
 		</a>
 
 		<a
-			href={prev ? url(`/moments/${prev.id}/`, lang) : "#"}
-			class:list={["w-full font-bold overflow-hidden active:scale-95", { "pointer-events-none": !prev }]}
+			href={next ? url(`/moments/${next.id}/`, lang) : "#"}
+			class:list={["w-full font-bold overflow-hidden active:scale-95", { "pointer-events-none": !next }]}
 		>
-			{prev && (
+			{next && (
 				<div class="btn-card rounded-2xl w-full h-[3.75rem] max-w-full px-4 flex items-center justify-end! gap-4">
 					<div class="overflow-hidden transition text-ellipsis whitespace-nowrap max-w-[calc(100%-3rem)] text-black/75 dark:text-white/75">
 						{i18n(I18nKey.laterMoment, lang)}
@@ -160,4 +160,5 @@ const gridClass = ["grid-cols-1", "grid-cols-2", "grid-cols-3"][
 			)}
 		</a>
 	</div>
+
 </MainGridLayout>
