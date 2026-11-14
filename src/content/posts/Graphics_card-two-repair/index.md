@@ -1,13 +1,13 @@
 ---
 title: "显卡二次维修"
 published: 2026-11-09
-draft: true
 pinned: false
 description: ""
 category: "短篇"
 tags:
   - "显卡"
 image: ""
+draft: false
 ---
 
 ### 前因
@@ -47,5 +47,6 @@ SB AI
 本来就穷困潦倒  
 再坏一次，直接挂咸鱼了，艹  
 吃一堑，长一智
+
 
 
